@@ -10,10 +10,11 @@
 		1F45EC18208CD99900E47B56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC17208CD99900E47B56 /* AppDelegate.swift */; };
 		1F45EC1A208CD99900E47B56 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC19208CD99900E47B56 /* ViewController.swift */; };
 		1F45EC1D208CD99900E47B56 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F45EC1B208CD99900E47B56 /* Main.storyboard */; };
-		1F45EC1F208CD99A00E47B56 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1F45EC1E208CD99A00E47B56 /* Assets.xcassets */; };
 		1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */; };
 		1F45EC2D208CD99A00E47B56 /* BubblePopTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC2C208CD99A00E47B56 /* BubblePopTests.swift */; };
 		1F45EC38208CD99A00E47B56 /* BubblePopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC37208CD99A00E47B56 /* BubblePopUITests.swift */; };
+		1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE54F6208DACFC001E00DB /* Assets.xcassets */; };
+		1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE5BDD208DCC38001E00DB /* popSFX.m4a */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -38,7 +39,6 @@
 		1F45EC17208CD99900E47B56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		1F45EC19208CD99900E47B56 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		1F45EC1C208CD99900E47B56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1F45EC1E208CD99A00E47B56 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1F45EC21208CD99A00E47B56 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		1F45EC23208CD99A00E47B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1F45EC28208CD99A00E47B56 /* BubblePopTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblePopTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -47,6 +47,8 @@
 		1F45EC33208CD99A00E47B56 /* BubblePopUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = BubblePopUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F45EC37208CD99A00E47B56 /* BubblePopUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubblePopUITests.swift; sourceTree = "<group>"; };
 		1F45EC39208CD99A00E47B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		1FBE54F6208DACFC001E00DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		1FBE5BDD208DCC38001E00DB /* popSFX.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = popSFX.m4a; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,8 +102,9 @@
 				1F45EC17208CD99900E47B56 /* AppDelegate.swift */,
 				1F45EC19208CD99900E47B56 /* ViewController.swift */,
 				1F45EC1B208CD99900E47B56 /* Main.storyboard */,
-				1F45EC1E208CD99A00E47B56 /* Assets.xcassets */,
+				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
+				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -230,7 +233,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */,
-				1F45EC1F208CD99A00E47B56 /* Assets.xcassets in Resources */,
+				1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */,
+				1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */,
 				1F45EC1D208CD99900E47B56 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
