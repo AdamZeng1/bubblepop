@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 50;
+	objectVersion = 48;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -15,6 +15,8 @@
 		1F45EC38208CD99A00E47B56 /* BubblePopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC37208CD99A00E47B56 /* BubblePopUITests.swift */; };
 		1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE54F6208DACFC001E00DB /* Assets.xcassets */; };
 		1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE5BDD208DCC38001E00DB /* popSFX.m4a */; };
+		1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BB2096C55300F00842 /* BubbleType.swift */; };
+		1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BD2096C77200F00842 /* BubbleView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +51,8 @@
 		1F45EC39208CD99A00E47B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FBE54F6208DACFC001E00DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FBE5BDD208DCC38001E00DB /* popSFX.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = popSFX.m4a; sourceTree = "<group>"; };
+		1FF4E6BB2096C55300F00842 /* BubbleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleType.swift; sourceTree = "<group>"; };
+		1FF4E6BD2096C77200F00842 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +109,8 @@
 				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
 				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
+				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
+				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -196,19 +202,22 @@
 				TargetAttributes = {
 					1F45EC13208CD99900E47B56 = {
 						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
 					};
 					1F45EC27208CD99A00E47B56 = {
 						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 1F45EC13208CD99900E47B56;
 					};
 					1F45EC32208CD99A00E47B56 = {
 						CreatedOnToolsVersion = 9.3;
+						ProvisioningStyle = Automatic;
 						TestTargetID = 1F45EC13208CD99900E47B56;
 					};
 				};
 			};
 			buildConfigurationList = 1F45EC0F208CD99900E47B56 /* Build configuration list for PBXProject "BubblePop" */;
-			compatibilityVersion = "Xcode 9.3";
+			compatibilityVersion = "Xcode 8.0";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
 			knownRegions = (
@@ -262,6 +271,8 @@
 			files = (
 				1F45EC1A208CD99900E47B56 /* ViewController.swift in Sources */,
 				1F45EC18208CD99900E47B56 /* AppDelegate.swift in Sources */,
+				1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */,
+				1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -424,8 +435,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 11.3;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
-				SWIFT_COMPILATION_MODE = wholemodule;
-				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
@@ -437,10 +447,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePop/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -455,10 +462,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePop/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePop;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -474,11 +478,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePopTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePopTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -495,11 +495,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePopTests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePopTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -515,11 +511,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePopUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePopUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
@@ -535,11 +527,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 776KD3PHFL;
 				INFOPLIST_FILE = BubblePopUITests/Info.plist;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@loader_path/Frameworks",
-				);
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = UTS.iOS.BubblePopUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 4.0;
