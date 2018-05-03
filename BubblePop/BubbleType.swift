@@ -17,8 +17,4 @@ class BubbleType {
         self.color = color
         self.points = points
     }
-    
-    func random() {
-
-    }
 }

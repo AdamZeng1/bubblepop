@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import AVFoundation
+import AVFoundation // for sound player
 import GameKit // for random number generator
 
 class ViewController: UIViewController {
@@ -26,6 +26,9 @@ class ViewController: UIViewController {
     
     let randomSource: GKRandomSource = GKARC4RandomSource()
     
+//    var firstBubble: BubbleType?
+//    var secondBubble: BubbleType?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,31 +39,7 @@ class ViewController: UIViewController {
         createBubble(at: CGPoint(x: 0.0, y: 0.0))
    
     }
-    
-    /*
-    func randomBubbleType() -> UIColor {
-        var bag: [UIColor] = []
-        for _ in 1...40 {
-            bag.append(.red)
-        }
-        for _ in 1...30 {
-            bag.append(.magenta)
-        }
-        for _ in 1...15 {
-            bag.append(.green)
-        }
-        for _ in 1...10 {
-            bag.append(.blue)
-        }
-        for _ in 1...5 {
-            bag.append(.black)
-        }
-        
-        let choice: Int = randomSource.nextInt(upperBound: bag.count)
-        return bag[choice]
-    }
-    */
-    
+
     func randomBubbleType() -> BubbleType {
         var bag: [BubbleType] = []
         for _ in 1...40 {
@@ -117,40 +96,19 @@ class ViewController: UIViewController {
         
         bubbleView.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchUpInside)
         self.view.addSubview(bubbleView)
-        
-        
-//        let dice2 : Int = Int(arc4random_uniform(3) + 1)
-//
-//        bubbleView.bubbleType = bubbles[dice2]
-        
-        /*
-        let button = UIButton()
-        let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
-        let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
-        button.frame = CGRect(x: randomX, y: randomY, width: 50, height: 50)
-        //button.backgroundColor = UIColor.red
-        button.setTitle("Name your Button ", for: .normal)
-
-        let image1 = UIImage(named: "bubble-5-green-15%.png")!
-
-        button.setImage(image1, for: .normal)
-        
-        button.addTarget(self, action: #selector(buttonAction), for: .touchUpInside)
-        self.view.addSubview(button)
-        */
-        
     }
-    
-    @objc func buttonAction(sender: UIButton!) {
-        print("Button tapped")
-    }
-    
     
     @IBAction func bubblePopped(_ sender: BubbleView) {
         playSound()
+        
+//        firstBubble = sender.bubbleType!
+        
+        
         self.score += sender.bubbleType!.points
         
-        debugLabel.text = "red bubble is popped, score is \(score)"
+        if let existingText = debugLabel.text {
+            debugLabel.text = "\(existingText) \n +\(sender.bubbleType!.points) point. score = \(score)"
+        }
         debugLabel.sizeToFit()
         
         sender.removeFromSuperview()
@@ -167,13 +125,6 @@ class ViewController: UIViewController {
         [bubble removeFromSuperview];
          */
     }
-    
-
-//    @IBAction func bubbleTapped(_ sender: BubbleView) {
-//        self.score += sender.bubbleType!.points
-//        sender.removeFromSuperview()
-//    }
-
     
     func playSound() {
         guard let url = Bundle.main.url(forResource: "popSFX", withExtension: "m4a") else { return }
@@ -201,7 +152,6 @@ class ViewController: UIViewController {
         myTimer = nil
     }
     
-
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
