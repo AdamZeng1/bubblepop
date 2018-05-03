@@ -10,6 +10,20 @@ import UIKit
 import AVFoundation // for sound player
 import GameKit // for random number generator
 
+extension UIColor {
+    var name: String? {
+        switch self {
+        case UIColor.black: return "black"
+        case UIColor.red: return "red"
+        case UIColor.green: return "green"
+        case UIColor.blue: return "blue"
+        case UIColor.magenta: return "magenta"
+        default: return nil
+        }
+    }
+}
+
+
 class ViewController: UIViewController {
 
     @IBOutlet weak var redBubble: UIButton!
@@ -26,8 +40,7 @@ class ViewController: UIViewController {
     
     let randomSource: GKRandomSource = GKARC4RandomSource()
     
-//    var firstBubble: BubbleType?
-//    var secondBubble: BubbleType?
+    var previousBubble: BubbleType?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -101,19 +114,32 @@ class ViewController: UIViewController {
     @IBAction func bubblePopped(_ sender: BubbleView) {
         playSound()
         
-//        firstBubble = sender.bubbleType!
+        var pointsGained: Double = 0.0
         
-        
-        self.score += sender.bubbleType!.points
-        
-        if let existingText = debugLabel.text {
-            debugLabel.text = "\(existingText) \n +\(sender.bubbleType!.points) point. score = \(score)"
+        if let currentBubble = sender.bubbleType {
+            if previousBubble?.color == currentBubble.color {
+                pointsGained = 1.5 * Double(currentBubble.points)
+                self.score += Int(round(pointsGained))
+            }
+            else {
+                pointsGained = Double(currentBubble.points)
+                self.score += currentBubble.points
+                previousBubble = currentBubble
+            }
         }
+        
+        /// for debugging
+        let currentColor = sender.bubbleType!.color.name
+        if let existingText = debugLabel.text {
+            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(Int(round(pointsGained))) point | score = \(score)"
+            print(debugLabel.text!)
+        }
+        
+        
         debugLabel.sizeToFit()
         
         sender.removeFromSuperview()
         
-//        print(redBubble.buttonType)
         
         /*
          sender is UIView?
@@ -143,6 +169,8 @@ class ViewController: UIViewController {
             print(error.localizedDescription)
         }
     }
+    
+    
     
     override func viewDidAppear(_ animated: Bool) {
         myTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(createBubble(at:)), userInfo: nil, repeats: true)
