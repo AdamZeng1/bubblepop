@@ -75,40 +75,53 @@ class ViewController: UIViewController {
         return bag[choice]
     }
     
-    //    @objc func createBubble(at: CGPoint) {
-    //        let bubbleView = UIButton(frame: CGRect(x: 0.0, y: 0.0, width: 100.0, height: 100.0))
-    //        let bubbleImage = UIImage.init(imageLiteralResourceName: "bubble-1-red-40%.png")
-    //        bubbleView.setImage(bubbleImage, for: UIControlState.normal)
-    //        bubbleView.addTarget(self, action: #selector(bubblePopped(_:)), for: UIControlEvents.touchUpInside)
-    //
-    //        self.view.addSubview(bubbleView)
-    //
-    //    }
-
+    func validLocation(of newBubble: BubbleView) -> Bool {
+        for subview in self.view.subviews {
+            if let existingBubble = subview as? BubbleView {
+                if existingBubble.frame.intersects(newBubble.frame) {
+                    return false
+                }
+            }
+        }
+        return true
+    }
     
     @objc func createBubble(at: CGPoint) {
         let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
         let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
-        let bubbleView = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 100, height: 100))
-        bubbleView.bubbleType = randomBubbleType()
+        let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
+        newBubble.bubbleType = randomBubbleType()
         
-        switch bubbleView.bubbleType?.color {
+        // set bubble image
+        switch newBubble.bubbleType?.color {
         case UIColor.red:
-            bubbleView.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
+            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
         case UIColor.magenta:
-            bubbleView.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
+            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
         case UIColor.green:
-            bubbleView.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
+            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
         case UIColor.blue:
-            bubbleView.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
+            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
         case UIColor.black:
-            bubbleView.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
+            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
         default:
             break
         }
         
-        bubbleView.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchUpInside)
-        self.view.addSubview(bubbleView)
+        // check bubbles to avoid overlap
+        var validLocation: Bool = true
+        for subview in self.view.subviews {
+            if let existingBubble = subview as? BubbleView {
+                if existingBubble.frame.intersects(newBubble.frame) {
+                    validLocation = false
+                }
+            }
+        }
+        
+        if validLocation {
+            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchUpInside)
+            self.view.addSubview(newBubble)
+        }
     }
     
     @IBAction func bubblePopped(_ sender: BubbleView) {
@@ -134,7 +147,6 @@ class ViewController: UIViewController {
             debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(Int(round(pointsGained))) point | score = \(score)"
             print(debugLabel.text!)
         }
-        
         
         debugLabel.sizeToFit()
         
@@ -180,6 +192,10 @@ class ViewController: UIViewController {
         myTimer = nil
     }
     
+    @IBAction func buttonPressed(_ sender: Any) {
+        myTimer?.invalidate()
+        myTimer = nil
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
