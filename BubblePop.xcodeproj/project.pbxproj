@@ -15,6 +15,7 @@
 		1F45EC38208CD99A00E47B56 /* BubblePopUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC37208CD99A00E47B56 /* BubblePopUITests.swift */; };
 		1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE54F6208DACFC001E00DB /* Assets.xcassets */; };
 		1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE5BDD208DCC38001E00DB /* popSFX.m4a */; };
+		1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1FDC1356209D321800331C9F /* popBGM.mp3 */; };
 		1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BB2096C55300F00842 /* BubbleType.swift */; };
 		1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BD2096C77200F00842 /* BubbleView.swift */; };
 /* End PBXBuildFile section */
@@ -51,6 +52,7 @@
 		1F45EC39208CD99A00E47B56 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		1FBE54F6208DACFC001E00DB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		1FBE5BDD208DCC38001E00DB /* popSFX.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = popSFX.m4a; sourceTree = "<group>"; };
+		1FDC1356209D321800331C9F /* popBGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popBGM.mp3; sourceTree = "<group>"; };
 		1FF4E6BB2096C55300F00842 /* BubbleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleType.swift; sourceTree = "<group>"; };
 		1FF4E6BD2096C77200F00842 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -108,9 +110,10 @@
 				1F45EC1B208CD99900E47B56 /* Main.storyboard */,
 				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
-				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
 				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
 				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
+				1FDC1356209D321800331C9F /* popBGM.mp3 */,
+				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -242,6 +245,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */,
+				1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */,
 				1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */,
 				1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */,
 				1F45EC1D208CD99900E47B56 /* Main.storyboard in Resources */,

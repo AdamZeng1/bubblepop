@@ -30,7 +30,9 @@ class ViewController: UIViewController {
     @IBOutlet weak var debugLabel: UILabel!
 
     var myTimer: Timer?
-    var player: AVAudioPlayer?
+    var playerBGM: AVAudioPlayer?
+    var playerSFX: AVAudioPlayer?
+    
     var score: Int = 0
     var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
                                  BubbleType(color: .magenta, points: 2),
@@ -47,12 +49,12 @@ class ViewController: UIViewController {
         
         //to generate a random number between 0 and the playfield width (or height), then assign that number to the view's center or frame
         //arc4random_uniform()
-        //
         
         createBubble(at: CGPoint(x: 0.0, y: 0.0))
-   
+        playSound(title: "popBGM", extensionCode: "mp3")
     }
-
+    
+    /// Function to randomly decide the probability of appearance of bubble
     func randomBubbleType() -> BubbleType {
         var bag: [BubbleType] = []
         for _ in 1...40 {
@@ -75,24 +77,8 @@ class ViewController: UIViewController {
         return bag[choice]
     }
     
-    func validLocation(of newBubble: BubbleView) -> Bool {
-        for subview in self.view.subviews {
-            if let existingBubble = subview as? BubbleView {
-                if existingBubble.frame.intersects(newBubble.frame) {
-                    return false
-                }
-            }
-        }
-        return true
-    }
-    
-    @objc func createBubble(at: CGPoint) {
-        let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
-        let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
-        let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
-        newBubble.bubbleType = randomBubbleType()
-        
-        // set bubble image
+    /// Method to set the image of the bubble
+    func setBubbleImage(of newBubble: BubbleView) {
         switch newBubble.bubbleType?.color {
         case UIColor.red:
             newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
@@ -107,44 +93,58 @@ class ViewController: UIViewController {
         default:
             break
         }
-        
-        // check bubbles to avoid overlap
-        var validLocation: Bool = true
+    }
+    
+    /// Function to determine valid location of new bubble
+    func isValidLocation(of newBubble: BubbleView) -> Bool {
         for subview in self.view.subviews {
             if let existingBubble = subview as? BubbleView {
                 if existingBubble.frame.intersects(newBubble.frame) {
-                    validLocation = false
+                    return false
                 }
             }
         }
+        return true
+    }
+    
+    @objc func createBubble(at: CGPoint) {
+        let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
+        let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
         
+        let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
+        newBubble.bubbleType = randomBubbleType()
+        setBubbleImage(of: newBubble)
+        
+        let validLocation = isValidLocation(of: newBubble)
         if validLocation {
             newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchUpInside)
             self.view.addSubview(newBubble)
         }
     }
     
-    @IBAction func bubblePopped(_ sender: BubbleView) {
-        playSound()
-        
-        var pointsGained: Double = 0.0
-        
-        if let currentBubble = sender.bubbleType {
-            if previousBubble?.color == currentBubble.color {
-                pointsGained = 1.5 * Double(currentBubble.points)
-                self.score += Int(round(pointsGained))
-            }
-            else {
-                pointsGained = Double(currentBubble.points)
-                self.score += currentBubble.points
-                previousBubble = currentBubble
-            }
+    /// Function to calculate points earned
+    /// If same colour bubbles are popped consecutively, bonus 1.5x the original point
+    func pointsGained(from currentBubble: BubbleType) -> Int {
+        if previousBubble?.color == currentBubble.color {
+            let points = 1.5 * Double(currentBubble.points)
+            return Int(round(points))
         }
-        
+        else {
+            previousBubble = currentBubble
+            return currentBubble.points
+        }
+    }
+    
+    @IBAction func bubblePopped(_ sender: BubbleView) {
+        playSound(title: "popSFX", extensionCode: "m4a")
+
+        let points = pointsGained(from: sender.bubbleType!)
+        self.score += points
+
         /// for debugging
         let currentColor = sender.bubbleType!.color.name
         if let existingText = debugLabel.text {
-            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(Int(round(pointsGained))) point | score = \(score)"
+            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(points) point | score = \(score)"
             print(debugLabel.text!)
         }
         
@@ -164,25 +164,29 @@ class ViewController: UIViewController {
          */
     }
     
-    func playSound() {
-        guard let url = Bundle.main.url(forResource: "popSFX", withExtension: "m4a") else { return }
+    /// Method to play background music and bubble popped SFX
+    func playSound(title: String, extensionCode: String) {
+        guard let url = Bundle.main.url(forResource: title, withExtension: extensionCode) else { return }
         
         do {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
             try AVAudioSession.sharedInstance().setActive(true)
             
-            player = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
-            
-            guard let player = player else { return }
-            
-            player.play()
+            if (title == "popBGM") {
+                playerBGM = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+                guard let playerBGM = playerBGM else { return }
+                playerBGM.play()
+            }
+            else if (title == "popSFX") {
+                playerSFX = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+                guard let playerSFX = playerSFX else { return }
+                playerSFX.play()
+            }
             
         } catch let error {
             print(error.localizedDescription)
         }
     }
-    
-    
     
     override func viewDidAppear(_ animated: Bool) {
         myTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(createBubble(at:)), userInfo: nil, repeats: true)
