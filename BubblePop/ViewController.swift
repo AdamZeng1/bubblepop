@@ -26,9 +26,11 @@ extension UIColor {
 
 class ViewController: UIViewController {
 
-    @IBOutlet weak var redBubble: UIButton!
-    @IBOutlet weak var debugLabel: UILabel!
-
+//    @IBOutlet weak var debugLabel: UILabel!
+    @IBOutlet weak var timerLabel: UILabel!
+    @IBOutlet weak var scoreLabel: UILabel!
+    @IBOutlet weak var highScoreLabel: UILabel!
+    
     var myTimer: Timer?
     var playerBGM: AVAudioPlayer?
     var playerSFX: AVAudioPlayer?
@@ -51,6 +53,9 @@ class ViewController: UIViewController {
         //arc4random_uniform()
         
         createBubble(at: CGPoint(x: 0.0, y: 0.0))
+        
+        // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
+        // Link: https://www.melodyloops.com/tracks/funny-plays/
         playSound(title: "popBGM", extensionCode: "mp3")
     }
     
@@ -140,15 +145,17 @@ class ViewController: UIViewController {
 
         let points = pointsGained(from: sender.bubbleType!)
         self.score += points
-
+        
+        scoreLabel.text = String(self.score)
+        
         /// for debugging
         let currentColor = sender.bubbleType!.color.name
-        if let existingText = debugLabel.text {
-            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(points) point | score = \(score)"
-            print(debugLabel.text!)
-        }
-        
-        debugLabel.sizeToFit()
+//        if let existingText = debugLabel.text {
+//            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(points) point | score = \(score)"
+//            print("\(String(describing: currentColor)) popped | +\(points) point | score = \(score)")
+//        }
+//        debugLabel.sizeToFit()
+        print("\(String(describing: currentColor)) popped | +\(points) point | score = \(score)")
         
         sender.removeFromSuperview()
         
@@ -169,7 +176,7 @@ class ViewController: UIViewController {
         guard let url = Bundle.main.url(forResource: title, withExtension: extensionCode) else { return }
         
         do {
-            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryPlayback)
+            try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
             try AVAudioSession.sharedInstance().setActive(true)
             
             if (title == "popBGM") {
