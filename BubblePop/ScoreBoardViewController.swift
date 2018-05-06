@@ -17,7 +17,7 @@ class ScoreBoardViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        finalScoreLabel.text = "Final score is \(finalScore)"
+        finalScoreLabel.text = "Final score is \(finalScore!)"
     }
 
     override func didReceiveMemoryWarning() {

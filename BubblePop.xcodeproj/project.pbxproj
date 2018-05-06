@@ -17,6 +17,8 @@
 		1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */ = {isa = PBXBuildFile; fileRef = 1FBE5BDD208DCC38001E00DB /* popSFX.m4a */; };
 		1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = 1FDC1356209D321800331C9F /* popBGM.mp3 */; };
 		1FDC1359209E849100331C9F /* ScoreBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC1358209E849100331C9F /* ScoreBoardViewController.swift */; };
+		1FDC135B209EB45200331C9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC135A209EB45200331C9F /* HomeViewController.swift */; };
+		1FDC135E209EC22100331C9F /* Fluo Gums.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FDC135D209EC13F00331C9F /* Fluo Gums.ttf */; };
 		1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BB2096C55300F00842 /* BubbleType.swift */; };
 		1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BD2096C77200F00842 /* BubbleView.swift */; };
 /* End PBXBuildFile section */
@@ -55,6 +57,8 @@
 		1FBE5BDD208DCC38001E00DB /* popSFX.m4a */ = {isa = PBXFileReference; lastKnownFileType = file; path = popSFX.m4a; sourceTree = "<group>"; };
 		1FDC1356209D321800331C9F /* popBGM.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = popBGM.mp3; sourceTree = "<group>"; };
 		1FDC1358209E849100331C9F /* ScoreBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBoardViewController.swift; sourceTree = "<group>"; };
+		1FDC135A209EB45200331C9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		1FDC135D209EC13F00331C9F /* Fluo Gums.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fluo Gums.ttf"; sourceTree = "<group>"; };
 		1FF4E6BB2096C55300F00842 /* BubbleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleType.swift; sourceTree = "<group>"; };
 		1FF4E6BD2096C77200F00842 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -107,16 +111,17 @@
 		1F45EC16208CD99900E47B56 /* BubblePop */ = {
 			isa = PBXGroup;
 			children = (
+				1FDC135F209EE5DE00331C9F /* Font Assets */,
+				1FDC135C209EBF4C00331C9F /* Sound Assets */,
 				1F45EC17208CD99900E47B56 /* AppDelegate.swift */,
 				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
+				1FDC135A209EB45200331C9F /* HomeViewController.swift */,
 				1F45EC19208CD99900E47B56 /* GameViewController.swift */,
 				1FDC1358209E849100331C9F /* ScoreBoardViewController.swift */,
 				1F45EC1B208CD99900E47B56 /* Main.storyboard */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
 				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
 				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
-				1FDC1356209D321800331C9F /* popBGM.mp3 */,
-				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -138,6 +143,23 @@
 				1F45EC39208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePopUITests;
+			sourceTree = "<group>";
+		};
+		1FDC135C209EBF4C00331C9F /* Sound Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1FDC1356209D321800331C9F /* popBGM.mp3 */,
+				1FBE5BDD208DCC38001E00DB /* popSFX.m4a */,
+			);
+			path = "Sound Assets";
+			sourceTree = "<group>";
+		};
+		1FDC135F209EE5DE00331C9F /* Font Assets */ = {
+			isa = PBXGroup;
+			children = (
+				1FDC135D209EC13F00331C9F /* Fluo Gums.ttf */,
+			);
+			path = "Font Assets";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -248,10 +270,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */,
-				1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */,
-				1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */,
-				1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */,
 				1F45EC1D208CD99900E47B56 /* Main.storyboard in Resources */,
+				1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */,
+				1FDC135E209EC22100331C9F /* Fluo Gums.ttf in Resources */,
+				1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */,
+				1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,6 +304,7 @@
 				1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */,
 				1FDC1359209E849100331C9F /* ScoreBoardViewController.swift in Sources */,
 				1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */,
+				1FDC135B209EB45200331C9F /* HomeViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

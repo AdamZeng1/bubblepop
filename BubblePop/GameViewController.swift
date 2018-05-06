@@ -26,15 +26,19 @@ extension UIColor {
 
 class GameViewController: UIViewController {
 
+    @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var highScoreLabel: UILabel!
     
+    var countdownTimer: Timer?
     var gameTimer: Timer?
+    
     var playerBGM: AVAudioPlayer?
     var playerSFX: AVAudioPlayer?
     
-    var gameTime = 15
+    var countdownLeft = 3
+    var timeLeft = 60
     
     var score: Int = 0
     var highScore: Int = 20
@@ -57,15 +61,11 @@ class GameViewController: UIViewController {
         
         highScoreLabel.text = String(highScore)
         
-        
         showHighScore()
-        timerLabel.text = String(gameTime)
+        timerLabel.text = String(timeLeft)
         
 //        createBubble(at: CGPoint(x: 0.0, y: 0.0))
         
-        // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
-        // Link: https://www.melodyloops.com/tracks/funny-plays/
-        playSound(title: "popBGM", extensionCode: "mp3")
     }
     
     func showHighScore() {
@@ -74,21 +74,52 @@ class GameViewController: UIViewController {
         }
     }
     
-    @objc func updateView() {
-        if gameTime > 0 {
-            gameTime -= 1
-            timerLabel.text = String(gameTime)
-            
-            createBubble(at: CGPoint(x: 0.0, y: 0.0))
+    @objc func updateCountdown() {
+        // Only counts down when the label is not hidden
+        if !countdownLabel.isHidden {
+            countdownLeft -= 1
         }
-        else if gameTime == 0 {
-            gameTimer?.invalidate()
-            gameTimer = nil
+        
+        // Stop countdown, hide the countdown label and play BGM sound when time is zero (game starts)
+        if countdownLeft <= 0 {
+            countdownTimer?.invalidate()
+            countdownTimer = nil
             
-            playerBGM?.stop()
+            countdownLabel.isHidden = true
             
-            self.performSegue(withIdentifier: "ScoreBoardSegue", sender: self)
+            // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
+            // Link: https://www.melodyloops.com/tracks/funny-plays/
+            playSound(title: "popBGM", extensionCode: "mp3")
         }
+        else {
+            countdownLabel.text = String(countdownLeft)
+            
+            // Flash the countdown label
+            countdownLabel.isHidden = !countdownLabel.isHidden
+        }
+    }
+    
+    @objc func updateGameTimer() {
+        if countdownLeft <= 0 {
+            if timeLeft <= 0 {
+                gameTimer?.invalidate()
+                gameTimer = nil
+                
+                playerBGM?.stop()
+                
+                self.performSegue(withIdentifier: "ScoreBoardSegue", sender: self)
+            }
+            else {
+                timeLeft -= 1
+                timerLabel.text = String(timeLeft)
+                
+                for _ in 1...5 {
+                    createBubble(at: CGPoint(x: 0.0, y: 0.0))
+                }
+                
+            }
+        }
+
     }
     
     /// Function to randomly decide the probability of appearance of bubble
@@ -154,7 +185,7 @@ class GameViewController: UIViewController {
         
         let validLocation = isValidLocation(of: newBubble)
         if validLocation {
-            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchUpInside)
+            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
         }
     }
@@ -183,7 +214,7 @@ class GameViewController: UIViewController {
         
         /// for debugging
         let currentColor = sender.bubbleType!.color.name
-        print("\(String(describing: currentColor)) popped | +\(points) point | score = \(score)")
+        print("\(String(describing: currentColor!)) popped | +\(points) point | score = \(score)")
         
         sender.removeFromSuperview()
     }
@@ -213,12 +244,16 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateView), userInfo: nil, repeats: true)
+        countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
+        
+        gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
+        
     }
-    override func viewWillDisappear(_ animated: Bool) {
-        gameTimer?.invalidate()
-        gameTimer = nil
-    }
+    
+//    override func viewWillDisappear(_ animated: Bool) {
+//        gameTimer?.invalidate()
+//        gameTimer = nil
+//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScoreBoardSegue" {

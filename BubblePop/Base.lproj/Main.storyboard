@@ -9,11 +9,16 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Fluo Gums.ttf">
+            <string>FluoGums</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--Home View Controller-->
         <scene sceneID="gAa-DV-RxV">
             <objects>
-                <viewController id="QFQ-0R-SG0" sceneMemberID="viewController">
+                <viewController id="QFQ-0R-SG0" customClass="HomeViewController" customModule="BubblePop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="dJu-dR-jrm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -28,11 +33,11 @@
                                             <constraint firstAttribute="height" constant="250" id="suz-0F-r04"/>
                                         </constraints>
                                     </imageView>
-                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCV-7q-mWe">
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCV-7q-mWe" userLabel="Name Text Field">
                                         <rect key="frame" x="61.5" y="268.5" width="127" height="30"/>
                                         <nil key="textColor"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" returnKeyType="done" textContentType="name"/>
                                     </textField>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tY-fz-012">
                                         <rect key="frame" x="110" y="317" width="30" height="30"/>
@@ -53,6 +58,9 @@
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="ZiG-eC-dq2"/>
                     </view>
+                    <connections>
+                        <outlet property="nameTextField" destination="KCV-7q-mWe" id="dVN-yw-NfI"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qil-D9-GFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -126,15 +134,28 @@
                                     <constraint firstAttribute="height" constant="46" id="CVb-S1-bWj"/>
                                 </constraints>
                             </stackView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="3" textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Xml-pB-jyc" userLabel="Count Down Label">
+                                <rect key="frame" x="137.5" y="283" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="100" id="5EY-BI-C8d"/>
+                                    <constraint firstAttribute="height" constant="100" id="5UI-V0-kjc"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="FluoGums" family="Fluo Gums" pointSize="50"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="qij-jU-N1W" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="75P-pB-bmu"/>
+                            <constraint firstItem="Xml-pB-jyc" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="ki2-qP-lLm"/>
                             <constraint firstItem="qij-jU-N1W" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="pxF-Ft-mjJ"/>
+                            <constraint firstItem="Xml-pB-jyc" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="yaR-PX-vnE"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
                     <connections>
+                        <outlet property="countdownLabel" destination="Xml-pB-jyc" id="OGe-pZ-On7"/>
                         <outlet property="highScoreLabel" destination="nsP-QK-yIG" id="kJg-2A-uMt"/>
                         <outlet property="scoreLabel" destination="Uhg-TT-dLJ" id="8W5-PX-Dtd"/>
                         <outlet property="timerLabel" destination="TJP-Ec-aBi" id="U49-Pg-Xww"/>
@@ -153,11 +174,16 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Final Score" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHt-Pu-4o5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHt-Pu-4o5">
                                 <rect key="frame" x="19" y="112" width="337" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="textColor"/>
+                                <attributedString key="attributedText">
+                                    <fragment content="Final Score">
+                                        <attributes>
+                                            <font key="NSFont" metaFont="system" size="17"/>
+                                        </attributes>
+                                    </fragment>
+                                </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
