@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  GameViewController.swift
 //  BubblePop
 //
 //  Created by Audwin on 23/4/18.
@@ -24,18 +24,21 @@ extension UIColor {
 }
 
 
-class ViewController: UIViewController {
+class GameViewController: UIViewController {
 
-//    @IBOutlet weak var debugLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var highScoreLabel: UILabel!
     
-    var myTimer: Timer?
+    var gameTimer: Timer?
     var playerBGM: AVAudioPlayer?
     var playerSFX: AVAudioPlayer?
     
+    var gameTime = 15
+    
     var score: Int = 0
+    var highScore: Int = 20
+    
     var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
                                  BubbleType(color: .magenta, points: 2),
                                  BubbleType(color: .green, points: 5),
@@ -52,11 +55,40 @@ class ViewController: UIViewController {
         //to generate a random number between 0 and the playfield width (or height), then assign that number to the view's center or frame
         //arc4random_uniform()
         
-        createBubble(at: CGPoint(x: 0.0, y: 0.0))
+        highScoreLabel.text = String(highScore)
+        
+        
+        showHighScore()
+        timerLabel.text = String(gameTime)
+        
+//        createBubble(at: CGPoint(x: 0.0, y: 0.0))
         
         // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
         // Link: https://www.melodyloops.com/tracks/funny-plays/
         playSound(title: "popBGM", extensionCode: "mp3")
+    }
+    
+    func showHighScore() {
+        if score > Int(highScoreLabel.text!)! {
+            highScoreLabel.text = String(score)
+        }
+    }
+    
+    @objc func updateView() {
+        if gameTime > 0 {
+            gameTime -= 1
+            timerLabel.text = String(gameTime)
+            
+            createBubble(at: CGPoint(x: 0.0, y: 0.0))
+        }
+        else if gameTime == 0 {
+            gameTimer?.invalidate()
+            gameTimer = nil
+            
+            playerBGM?.stop()
+            
+            self.performSegue(withIdentifier: "ScoreBoardSegue", sender: self)
+        }
     }
     
     /// Function to randomly decide the probability of appearance of bubble
@@ -147,28 +179,13 @@ class ViewController: UIViewController {
         self.score += points
         
         scoreLabel.text = String(self.score)
+        showHighScore()
         
         /// for debugging
         let currentColor = sender.bubbleType!.color.name
-//        if let existingText = debugLabel.text {
-//            debugLabel.text = "\(existingText) \n \(String(describing: currentColor)) popped | +\(points) point | score = \(score)"
-//            print("\(String(describing: currentColor)) popped | +\(points) point | score = \(score)")
-//        }
-//        debugLabel.sizeToFit()
         print("\(String(describing: currentColor)) popped | +\(points) point | score = \(score)")
         
         sender.removeFromSuperview()
-        
-        
-        /*
-         sender is UIView?
-        int points = pointsForBubble(bubble);
-        
-        self.score += points;
-        self.scoreLabel.text = @(self.score).description;
-        
-        [bubble removeFromSuperview];
-         */
     }
     
     /// Method to play background music and bubble popped SFX
@@ -196,16 +213,18 @@ class ViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        myTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(createBubble(at:)), userInfo: nil, repeats: true)
+        gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateView), userInfo: nil, repeats: true)
     }
     override func viewWillDisappear(_ animated: Bool) {
-        myTimer?.invalidate()
-        myTimer = nil
+        gameTimer?.invalidate()
+        gameTimer = nil
     }
     
-    @IBAction func buttonPressed(_ sender: Any) {
-        myTimer?.invalidate()
-        myTimer = nil
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "ScoreBoardSegue" {
+            let scoreBoardViewController = segue.destination as! ScoreBoardViewController
+            scoreBoardViewController.finalScore = score
+        }
     }
     
     override func didReceiveMemoryWarning() {

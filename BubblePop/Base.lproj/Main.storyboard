@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14109" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="QFQ-0R-SG0">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
@@ -11,21 +11,61 @@
     </dependencies>
     <scenes>
         <!--View Controller-->
+        <scene sceneID="gAa-DV-RxV">
+            <objects>
+                <viewController id="QFQ-0R-SG0" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="dJu-dR-jrm">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="zZL-sP-l7o">
+                                <rect key="frame" x="62" y="20" width="250" height="347"/>
+                                <subviews>
+                                    <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BubblePop_Text" translatesAutoresizingMaskIntoConstraints="NO" id="Mwk-B3-5Lg">
+                                        <rect key="frame" x="0.0" y="0.0" width="250" height="250"/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="250" id="haq-Rg-8Cq"/>
+                                            <constraint firstAttribute="height" constant="250" id="suz-0F-r04"/>
+                                        </constraints>
+                                    </imageView>
+                                    <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your name" textAlignment="center" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="KCV-7q-mWe">
+                                        <rect key="frame" x="61.5" y="268.5" width="127" height="30"/>
+                                        <nil key="textColor"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                        <textInputTraits key="textInputTraits" autocapitalizationType="sentences" textContentType="name"/>
+                                    </textField>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tY-fz-012">
+                                        <rect key="frame" x="110" y="317" width="30" height="30"/>
+                                        <state key="normal" title="Play"/>
+                                        <connections>
+                                            <segue destination="BYZ-38-t0r" kind="show" id="sj5-o5-wA7"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="ZiG-eC-dq2" firstAttribute="trailing" secondItem="zZL-sP-l7o" secondAttribute="trailing" constant="63" id="FQF-PF-cdN"/>
+                            <constraint firstItem="zZL-sP-l7o" firstAttribute="leading" secondItem="ZiG-eC-dq2" secondAttribute="leading" constant="62" id="Jzk-rE-1QP"/>
+                            <constraint firstItem="ZiG-eC-dq2" firstAttribute="bottom" secondItem="zZL-sP-l7o" secondAttribute="bottom" constant="300" id="OEC-zL-z7w"/>
+                            <constraint firstItem="zZL-sP-l7o" firstAttribute="top" secondItem="ZiG-eC-dq2" secondAttribute="top" id="uQJ-Ea-2Eh"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="ZiG-eC-dq2"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Qil-D9-GFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-618.39999999999998" y="133.5832083958021"/>
+        </scene>
+        <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="BubblePop" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="GameViewController" customModule="BubblePop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aav-32-0hB">
-                                <rect key="frame" x="301" y="589" width="46" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <action selector="buttonPressed:" destination="BYZ-38-t0r" eventType="touchUpInside" id="DYG-jd-thP"/>
-                                </connections>
-                            </button>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="qij-jU-N1W">
                                 <rect key="frame" x="12.5" y="20" width="350" height="46"/>
                                 <subviews>
@@ -98,36 +138,42 @@
                         <outlet property="highScoreLabel" destination="nsP-QK-yIG" id="kJg-2A-uMt"/>
                         <outlet property="scoreLabel" destination="Uhg-TT-dLJ" id="8W5-PX-Dtd"/>
                         <outlet property="timerLabel" destination="TJP-Ec-aBi" id="U49-Pg-Xww"/>
+                        <segue destination="51G-c0-Gn6" kind="show" identifier="ScoreBoardSegue" id="Ibh-4I-5XF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="136.80000000000001" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Score Board View Controller-->
         <scene sceneID="J1n-as-Kx3">
             <objects>
-                <viewController id="51G-c0-Gn6" sceneMemberID="viewController">
+                <viewController id="51G-c0-Gn6" customClass="ScoreBoardViewController" customModule="BubblePop" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6MX-34-7Xm">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Jln-FR-xZC">
-                                <rect key="frame" x="281" y="585" width="46" height="30"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Final Score" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHt-Pu-4o5">
+                                <rect key="frame" x="19" y="112" width="337" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <state key="normal" title="Button"/>
-                                <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" id="2uL-Nu-FDO"/>
-                                </connections>
-                            </button>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <viewLayoutGuide key="safeArea" id="TQ0-8F-QJb"/>
                     </view>
+                    <connections>
+                        <outlet property="finalScoreLabel" destination="gHt-Pu-4o5" id="RkX-Oe-Vka"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vhh-qx-I1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="844" y="134"/>
+            <point key="canvasLocation" x="936.79999999999995" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="BubblePop_Text" width="1024" height="1024"/>
+    </resources>
 </document>
