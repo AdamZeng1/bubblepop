@@ -147,20 +147,23 @@ class GameViewController: UIViewController {
     
     /// Method to set the image of the bubble
     func setBubbleImage(of newBubble: BubbleView) {
-        switch newBubble.bubbleType?.color {
-        case UIColor.red:
-            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
-        case UIColor.magenta:
-            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
-        case UIColor.green:
-            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
-        case UIColor.blue:
-            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
-        case UIColor.black:
-            newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
-        default:
-            break
+        if let color = newBubble.bubbleType?.color {
+            switch color {
+            case UIColor.red:
+                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
+            case UIColor.magenta:
+                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
+            case UIColor.green:
+                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
+            case UIColor.blue:
+                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
+            case UIColor.black:
+                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
+            default:
+                break
+            }
         }
+
     }
     
     /// Function to determine valid location of new bubble
