@@ -39,6 +39,7 @@ class GameViewController: UIViewController {
     
     var countdownLeft = 3
     var timeLeft = 60
+    var maxBubbles = 15
     
     var score: Int = 0
     var highScore: Int = 20
@@ -116,9 +117,15 @@ class GameViewController: UIViewController {
                 
                 timerLabel.text = String(timeLeft)
                 
-                for _ in 1...5 {
-                    createBubble(at: CGPoint(x: 0.0, y: 0.0))
+                // Add more bubbles below the max number
+                if bubbleCount() < maxBubbles {
+                    let bubbleLimit = randomSource.nextInt(upperBound: (maxBubbles - bubbleCount()))
+                    for _ in 0...bubbleLimit {
+                        createBubble()
+                    }
                 }
+                
+                // Randomly remove bubbles
                 
             }
         }
@@ -181,7 +188,7 @@ class GameViewController: UIViewController {
         return true
     }
     
-    @objc func createBubble(at: CGPoint) {
+    @objc func createBubble() {
         let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
         let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
         
@@ -194,6 +201,16 @@ class GameViewController: UIViewController {
             newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
         }
+    }
+    
+    func bubbleCount() -> Int {
+        var count: Int = 0
+        for subview in self.view.subviews {
+            if subview is BubbleView {
+                count += 1
+            }
+        }
+        return count
     }
     
     /// Function to calculate points earned
@@ -243,7 +260,6 @@ class GameViewController: UIViewController {
         let currentColor = sender.bubbleType!.color.name
         print("\(String(describing: currentColor!)) popped | +\(points) point | score = \(score)")
         
-//        sender.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
         sender.removeFromSuperview()
     }
     
@@ -279,11 +295,6 @@ class GameViewController: UIViewController {
         gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
         
     }
-    
-//    override func viewWillDisappear(_ animated: Bool) {
-//        gameTimer?.invalidate()
-//        gameTimer = nil
-//    }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScoreBoardSegue" {
