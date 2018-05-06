@@ -19,6 +19,7 @@
 		1FDC1359209E849100331C9F /* ScoreBoardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC1358209E849100331C9F /* ScoreBoardViewController.swift */; };
 		1FDC135B209EB45200331C9F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC135A209EB45200331C9F /* HomeViewController.swift */; };
 		1FDC135E209EC22100331C9F /* Fluo Gums.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 1FDC135D209EC13F00331C9F /* Fluo Gums.ttf */; };
+		1FDC1361209F1C5A00331C9F /* PointView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FDC1360209F1C5A00331C9F /* PointView.swift */; };
 		1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BB2096C55300F00842 /* BubbleType.swift */; };
 		1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1FF4E6BD2096C77200F00842 /* BubbleView.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		1FDC1358209E849100331C9F /* ScoreBoardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreBoardViewController.swift; sourceTree = "<group>"; };
 		1FDC135A209EB45200331C9F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		1FDC135D209EC13F00331C9F /* Fluo Gums.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Fluo Gums.ttf"; sourceTree = "<group>"; };
+		1FDC1360209F1C5A00331C9F /* PointView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PointView.swift; sourceTree = "<group>"; };
 		1FF4E6BB2096C55300F00842 /* BubbleType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleType.swift; sourceTree = "<group>"; };
 		1FF4E6BD2096C77200F00842 /* BubbleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BubbleView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -122,6 +124,7 @@
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
 				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
 				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
+				1FDC1360209F1C5A00331C9F /* PointView.swift */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -303,6 +306,7 @@
 				1F45EC18208CD99900E47B56 /* AppDelegate.swift in Sources */,
 				1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */,
 				1FDC1359209E849100331C9F /* ScoreBoardViewController.swift in Sources */,
+				1FDC1361209F1C5A00331C9F /* PointView.swift in Sources */,
 				1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */,
 				1FDC135B209EB45200331C9F /* HomeViewController.swift in Sources */,
 			);

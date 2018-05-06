@@ -52,6 +52,7 @@ class GameViewController: UIViewController {
     let randomSource: GKRandomSource = GKARC4RandomSource()
     
     var previousBubble: BubbleType?
+    var isComboPoint: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -63,8 +64,6 @@ class GameViewController: UIViewController {
         
         showHighScore()
         timerLabel.text = String(timeLeft)
-        
-//        createBubble(at: CGPoint(x: 0.0, y: 0.0))
         
     }
     
@@ -87,8 +86,6 @@ class GameViewController: UIViewController {
             
             countdownLabel.isHidden = true
             
-            // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
-            // Link: https://www.melodyloops.com/tracks/funny-plays/
             playSound(title: "popBGM", extensionCode: "mp3")
         }
         else {
@@ -111,6 +108,12 @@ class GameViewController: UIViewController {
             }
             else {
                 timeLeft -= 1
+                
+                if timeLeft <= 10 {
+                    timerLabel.textColor = .red
+                    timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
+                }
+                
                 timerLabel.text = String(timeLeft)
                 
                 for _ in 1...5 {
@@ -198,18 +201,39 @@ class GameViewController: UIViewController {
     func pointsGained(from currentBubble: BubbleType) -> Int {
         if previousBubble?.color == currentBubble.color {
             let points = 1.5 * Double(currentBubble.points)
+            isComboPoint = true
             return Int(round(points))
         }
         else {
             previousBubble = currentBubble
+            isComboPoint = false
             return currentBubble.points
         }
     }
     
+    func showPointView(for currentBubble: BubbleView, gainedPoints: Int) {
+        let pointView: PointView = PointView(frame: CGRect(x: currentBubble.frame.minX, y: currentBubble.frame.minY, width: 150, height: 150))
+        
+        pointView.textColor = currentBubble.bubbleType?.color
+        
+        if isComboPoint {
+            pointView.text = "1.5X COMBO! \n +\(gainedPoints)"
+            pointView.font = pointView.font.withSize(14)
+            pointView.adjustsFontSizeToFitWidth = true
+            pointView.sizeToFit()
+        }
+        else {
+            pointView.text = "+\(gainedPoints)"
+        }
+        self.view.addSubview(pointView)
+    }
+    
     @IBAction func bubblePopped(_ sender: BubbleView) {
         playSound(title: "popSFX", extensionCode: "m4a")
-
+        
         let points = pointsGained(from: sender.bubbleType!)
+        showPointView(for: sender, gainedPoints: points)
+        
         self.score += points
         
         scoreLabel.text = String(self.score)
@@ -219,6 +243,7 @@ class GameViewController: UIViewController {
         let currentColor = sender.bubbleType!.color.name
         print("\(String(describing: currentColor!)) popped | +\(points) point | score = \(score)")
         
+//        sender.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
         sender.removeFromSuperview()
     }
     
@@ -230,6 +255,8 @@ class GameViewController: UIViewController {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
             try AVAudioSession.sharedInstance().setActive(true)
             
+            // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
+            // Link: https://www.melodyloops.com/tracks/funny-plays/
             if (title == "popBGM") {
                 playerBGM = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
                 guard let playerBGM = playerBGM else { return }
