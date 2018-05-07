@@ -103,14 +103,14 @@
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="equalSpacing" translatesAutoresizingMaskIntoConstraints="NO" id="DDA-46-tmq">
                                         <rect key="frame" x="0.0" y="136" width="343" height="38"/>
                                         <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwA-RO-RBN" userLabel="Min Game Time Label">
-                                                <rect key="frame" x="0.0" y="0.0" width="31.5" height="38"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="0:15" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GwA-RO-RBN" userLabel="Min Game Time Label">
+                                                <rect key="frame" x="0.0" y="0.0" width="59" height="38"/>
                                                 <fontDescription key="fontDescription" name="FluoGums" family="Fluo Gums" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="120" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3W-hD-8cx" userLabel="Max Game Time Label">
-                                                <rect key="frame" x="292.5" y="0.0" width="50.5" height="38"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="2:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="F3W-hD-8cx" userLabel="Max Game Time Label">
+                                                <rect key="frame" x="279" y="0.0" width="64" height="38"/>
                                                 <fontDescription key="fontDescription" name="FluoGums" family="Fluo Gums" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -164,7 +164,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="100" id="RHY-ME-I7t"/>
                                 </constraints>
-                                <state key="normal" title="Home" image="button-home"/>
+                                <state key="normal" title="Home" image="button-done"/>
                                 <connections>
                                     <action selector="homeButtonTapped:" destination="0aW-h9-ODg" eventType="touchUpInside" id="jJL-V1-Sph"/>
                                     <segue destination="tYj-we-R5d" kind="unwind" identifier="" unwindAction="unwindToHomeWithUnwindSegue:" id="RSy-f6-bdz"/>
@@ -230,8 +230,8 @@
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJP-Ec-aBi">
-                                                <rect key="frame" x="46" y="25.5" width="21" height="20.5"/>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:00" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TJP-Ec-aBi">
+                                                <rect key="frame" x="40" y="25.5" width="33" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -355,6 +355,7 @@
     </scenes>
     <resources>
         <image name="BubblePop_Logo" width="1024" height="1024"/>
+        <image name="button-done" width="700" height="700"/>
         <image name="button-home" width="700" height="700"/>
         <image name="button-play" width="700" height="700"/>
         <image name="button-scoreboard" width="700" height="700"/>

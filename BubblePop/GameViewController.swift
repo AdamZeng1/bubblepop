@@ -67,21 +67,10 @@ class GameViewController: UIViewController {
             maxBubbles = settings.maxBubbles
         }
         
-//        if let gameTime = gameSettings?.gameTime {
-//            timeLeft = gameTime
-//        }
-//
-//        if let limit = gameSettings?.maxBubbles {
-//            maxBubbles = limit
-//        }
-//
-//        timeLeft = (gameSettings?.gameTime)!
-//        maxBubbles = (gameSettings?.maxBubbles)!
-        
         highScoreLabel.text = String(highScore)
         
         showHighScore()
-        timerLabel.text = String(timeLeft)
+        timerLabel.text = timeFormatted(timeLeft)
         
     }
     
@@ -114,6 +103,12 @@ class GameViewController: UIViewController {
         }
     }
     
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return String(format: "%01d:%02d", minutes, seconds)
+    }
+    
     @objc func updateGameTimer() {
         if countdownLeft <= 0 {
             if timeLeft <= 0 {
@@ -133,7 +128,8 @@ class GameViewController: UIViewController {
                     timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
                 }
                 
-                timerLabel.text = String(timeLeft)
+//                timerLabel.text = String(timeLeft)
+                timerLabel.text = timeFormatted(timeLeft)
                 
                 // Add more bubbles below the max number
                 if bubbleCount() < maxBubbles {

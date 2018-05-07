@@ -10,7 +10,7 @@ import Foundation
 
 struct DataStorage : Codable {
     let gameSettingsArchiveURL: URL
-//    let scoreboardArchiveURL: URL
+    let scoreboardArchiveURL: URL
     
     enum DataError: Error {
         case dataNotFound
@@ -21,8 +21,8 @@ struct DataStorage : Codable {
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         gameSettingsArchiveURL = documentsDirectory.appendingPathComponent("game_settings")
             .appendingPathExtension("json")
-//        scoreboardArchiveURL = documentsDirectory.appendingPathComponent("scoreboard")
-//            .appendingPathExtension("json")
+        scoreboardArchiveURL = documentsDirectory.appendingPathComponent("scoreboard")
+            .appendingPathExtension("json")
     }
     
     func read(from archive: URL) throws -> Data {

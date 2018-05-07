@@ -81,11 +81,10 @@ class SettingsViewController: UIViewController {
         return value
     }
     
-    @IBAction func gameTimeSliderChanged(_ sender: Any) {
-        let value: Int = Int(gameTimeSlider.value)
+    func toTimeValue(_ sliderValue: Int) -> Int {
         var time: Int = 0
         
-        switch value {
+        switch sliderValue {
         case 0:
             time = 15
         case 1:
@@ -99,8 +98,19 @@ class SettingsViewController: UIViewController {
         default:
             time = 60
         }
+        return time
+    }
+    
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return String(format: "%01d:%02d", minutes, seconds)
+    }
+    
+    @IBAction func gameTimeSliderChanged(_ sender: Any) {
+        let time: Int = toTimeValue(Int(gameTimeSlider.value))
         
-        gameTimeChosenLabel.text = String(time)
+        gameTimeChosenLabel.text = timeFormatted(time)
         
     }
     
@@ -127,7 +137,7 @@ class SettingsViewController: UIViewController {
     }
     
     @IBAction func homeButtonTapped(_ sender: Any) {
-        let settings = GameSettings(gameTime: Int(gameTimeChosenLabel.text!)!, maxBubbles: Int(maxBubblesChosenLabel.text!)!)
+        let settings = GameSettings(gameTime: toTimeValue(Int(gameTimeSlider.value)), maxBubbles: Int(maxBubblesChosenLabel.text!)!)
         do {
             try dataStorage.saveData(settings: settings)
         } catch {
