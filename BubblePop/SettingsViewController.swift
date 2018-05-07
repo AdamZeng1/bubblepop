@@ -22,13 +22,65 @@ class SettingsViewController: UIViewController {
     @IBOutlet weak var minBubblesLabel: UILabel!
     @IBOutlet weak var maxBubblesLabel: UILabel!
     
-    var gameSettings = GameSettings()
+    let dataStorage = DataStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        do {
+            let gameSettings = try dataStorage.loadGameSettings()
+            gameTimeSlider.value = Float(toSliderValue(time: gameSettings.gameTime))
+            maxBubblesSlider.value = Float(toSliderValue(limit: gameSettings.maxBubbles))
+        } catch {
+            let gameSettings = GameSettings()
+            gameTimeSlider.value = Float(gameSettings.gameTime)
+            maxBubblesSlider.value = Float(gameSettings.maxBubbles)
+        }
+        
+        gameTimeSliderChanged(self)
+        maxBubblesSliderChanged(self)
     }
-
+    
+    func toSliderValue(time: Int) -> Int {
+        var value: Int = 0
+        
+        switch time {
+        case 15:
+            value = 0
+        case 30:
+            value = 1
+        case 60:
+            value = 2
+        case 90:
+            value = 3
+        case 120:
+            value = 4
+        default:
+            value = 2
+        }
+        return value
+    }
+    
+    func toSliderValue(limit: Int) -> Int {
+        var value: Int = 0
+        
+        switch limit {
+        case 5:
+            value = 0
+        case 10:
+            value = 1
+        case 15:
+            value = 2
+        case 20:
+            value = 3
+        case 25:
+            value = 4
+        default:
+            value = 2
+        }
+        return value
+    }
+    
     @IBAction func gameTimeSliderChanged(_ sender: Any) {
         let value: Int = Int(gameTimeSlider.value)
         var time: Int = 0
@@ -50,8 +102,6 @@ class SettingsViewController: UIViewController {
         
         gameTimeChosenLabel.text = String(time)
         
-//        gameSettings?.gameTime = time
-//        gameSettings.setGameTime(to: time)
     }
     
     @IBAction func maxBubblesSliderChanged(_ sender: Any) {
@@ -74,21 +124,24 @@ class SettingsViewController: UIViewController {
         }
         
         maxBubblesChosenLabel.text = String(limit)
-        
-//        gameSettings?.maxBubbles = limit
-//        gameSettings.setMaxBubbles(to: limit)
     }
     
     @IBAction func homeButtonTapped(_ sender: Any) {
-        self.navigationController?.popViewController(animated: true)
-        self.dismiss(animated: true, completion: nil)
+        let settings = GameSettings(gameTime: Int(gameTimeChosenLabel.text!)!, maxBubbles: Int(maxBubblesChosenLabel.text!)!)
+        do {
+            try dataStorage.saveData(settings: settings)
+        } catch {
+            print(error)
+        }
+
+//        performSegue(withIdentifier: "HomeViewSegue", sender: self)
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "HomeViewSegue" {
-            let homeViewController = segue.destination as! HomeViewController
-            homeViewController.gameSettings = self.gameSettings
-        }
+//        if segue.identifier == "HomeViewSegue" {
+//            let homeViewController = segue.destination as! HomeViewController
+//            homeViewController.gameSettings = self.gameSettings
+//        }
     }
     
     override func didReceiveMemoryWarning() {

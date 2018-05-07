@@ -42,7 +42,7 @@ class GameViewController: UIViewController {
     var playerName: String?
     var gameSettings: GameSettings?
     
-    var timeLeft = 10
+    var timeLeft = 60
     var maxBubbles = 15
     
     var score: Int = 0
@@ -62,13 +62,19 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let gameTime = gameSettings?.gameTime {
-            timeLeft = gameTime
+        if let settings = gameSettings {
+            timeLeft = settings.gameTime
+            maxBubbles = settings.maxBubbles
         }
         
-        if let limit = gameSettings?.maxBubbles {
-            maxBubbles = limit
-        }
+//        if let gameTime = gameSettings?.gameTime {
+//            timeLeft = gameTime
+//        }
+//
+//        if let limit = gameSettings?.maxBubbles {
+//            maxBubbles = limit
+//        }
+//
 //        timeLeft = (gameSettings?.gameTime)!
 //        maxBubbles = (gameSettings?.maxBubbles)!
         

@@ -167,6 +167,7 @@
                                 <state key="normal" title="Home" image="button-home"/>
                                 <connections>
                                     <action selector="homeButtonTapped:" destination="0aW-h9-ODg" eventType="touchUpInside" id="jJL-V1-Sph"/>
+                                    <segue destination="tYj-we-R5d" kind="unwind" identifier="" unwindAction="unwindToHomeWithUnwindSegue:" id="RSy-f6-bdz"/>
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="GAME SETTINGS" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="OF9-G9-wzD" userLabel="Game Settings Label">
@@ -205,6 +206,7 @@
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1o-h9-cD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <exit id="tYj-we-R5d" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="-620" y="882"/>
         </scene>

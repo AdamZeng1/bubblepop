@@ -13,8 +13,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     // Outlets
     @IBOutlet weak var nameTextField: UITextField!
     
-    var gameSettings: GameSettings?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -51,15 +49,18 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     
     @IBAction func settingsButtonTapped(_ sender: Any) {
         performSegue(withIdentifier: "SettingsViewSegue", sender: nil)
-//        navigationController?.popViewController(animated: true)
-        
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GameViewSegue" {
             let gameViewController = segue.destination as! GameViewController
-            gameViewController.playerName = nameTextField.text
-            gameViewController.gameSettings = self.gameSettings
+            do {
+                gameViewController.gameSettings = try DataStorage().loadGameSettings()
+            } catch {
+                gameViewController.gameSettings = GameSettings()
+            }
+//            gameViewController.playerName = nameTextField.text
+//            gameViewController.gameSettings = self.gameSettings
         }
     }
     
