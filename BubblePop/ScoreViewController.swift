@@ -1,5 +1,5 @@
 //
-//  ScoreBoardViewController.swift
+//  ScoreboardViewController.swift
 //  BubblePop
 //
 //  Created by Audwin on 6/5/18.
@@ -8,7 +8,7 @@
 
 import UIKit
 
-class ScoreBoardViewController: UIViewController {
+class ScoreViewController: UIViewController {
     
     @IBOutlet weak var finalScoreLabel: UILabel!
     

@@ -25,7 +25,7 @@ extension UIColor {
 
 
 class GameViewController: UIViewController {
-
+    
     @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -34,15 +34,19 @@ class GameViewController: UIViewController {
     var countdownTimer: Timer?
     var gameTimer: Timer?
     
-    var playerBGM: AVAudioPlayer?
-    var playerSFX: AVAudioPlayer?
+    var audioPlayerBGM: AVAudioPlayer?
+    var audioPlayerSFX: AVAudioPlayer?
     
     var countdownLeft = 3
-    var timeLeft = 60
+    
+    var playerName: String?
+    var gameSettings: GameSettings?
+    
+    var timeLeft = 10
     var maxBubbles = 15
     
     var score: Int = 0
-    var highScore: Int = 20
+    var highScore: Int = 55
     
     var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
                                  BubbleType(color: .magenta, points: 2),
@@ -58,8 +62,15 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //to generate a random number between 0 and the playfield width (or height), then assign that number to the view's center or frame
-        //arc4random_uniform()
+        if let gameTime = gameSettings?.gameTime {
+            timeLeft = gameTime
+        }
+        
+        if let limit = gameSettings?.maxBubbles {
+            maxBubbles = limit
+        }
+//        timeLeft = (gameSettings?.gameTime)!
+//        maxBubbles = (gameSettings?.maxBubbles)!
         
         highScoreLabel.text = String(highScore)
         
@@ -103,13 +114,14 @@ class GameViewController: UIViewController {
                 gameTimer?.invalidate()
                 gameTimer = nil
                 
-                playerBGM?.stop()
+                audioPlayerBGM?.stop()
                 
-                self.performSegue(withIdentifier: "ScoreBoardSegue", sender: self)
+                self.performSegue(withIdentifier: "ScoreViewSegue", sender: self)
             }
             else {
                 timeLeft -= 1
                 
+                // Emphasize there is short game time left
                 if timeLeft <= 10 {
                     timerLabel.textColor = .red
                     timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
@@ -191,7 +203,7 @@ class GameViewController: UIViewController {
     @objc func createBubble() {
         let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
         let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
-        
+
         let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
         newBubble.bubbleType = randomBubbleType()
         setBubbleImage(of: newBubble)
@@ -200,6 +212,7 @@ class GameViewController: UIViewController {
         if validLocation {
             newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
+//            self.view.sendSubview(toBack: newBubble)
         }
     }
     
@@ -274,13 +287,13 @@ class GameViewController: UIViewController {
             // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
             // Link: https://www.melodyloops.com/tracks/funny-plays/
             if (title == "popBGM") {
-                playerBGM = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
-                guard let playerBGM = playerBGM else { return }
+                audioPlayerBGM = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+                guard let playerBGM = audioPlayerBGM else { return }
                 playerBGM.play()
             }
             else if (title == "popSFX") {
-                playerSFX = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
-                guard let playerSFX = playerSFX else { return }
+                audioPlayerSFX = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
+                guard let playerSFX = audioPlayerSFX else { return }
                 playerSFX.play()
             }
             
@@ -297,9 +310,9 @@ class GameViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        if segue.identifier == "ScoreBoardSegue" {
-            let scoreBoardViewController = segue.destination as! ScoreBoardViewController
-            scoreBoardViewController.finalScore = score
+        if segue.identifier == "ScoreViewSegue" {
+            let scoreViewController = segue.destination as! ScoreViewController
+            scoreViewController.finalScore = self.score
         }
     }
     
