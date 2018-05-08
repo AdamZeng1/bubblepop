@@ -8,9 +8,11 @@
 
 import UIKit
 
-class ScoreViewController: UIViewController {
+class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewDelegate {
     
+    @IBOutlet weak var playerNameLabel: UILabel!
     @IBOutlet weak var finalScoreLabel: UILabel!
+    @IBOutlet weak var scoreboardTableView: UITableView!
     
     var playerName: String?
     var finalScore: Int!
@@ -21,25 +23,46 @@ class ScoreViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        if let name = playerName {
-            finalScoreLabel.text = "Name is \(name) \n Final score is \(finalScore!)"
+        do {
+            scoreboard = try dataStorage.loadScoreboard()
+        } catch {
+            print("Loading scoreboard error")
         }
+        
+        sortScores()
+        
+        scoreboardTableView.dataSource = self
+        scoreboardTableView.delegate = self
+        
+        if let name = playerName {
+            playerNameLabel.text = name
+            finalScoreLabel.text = "Final Score: \(finalScore!)"
+            
+            let newEntry = Scoreboard(name: name, score: finalScore)
+            
+            scoreboard.append(newEntry)
+            sortScores()
+        }
+        else {
+            playerNameLabel.text = ""
+            finalScoreLabel.text = ""
+        }
+        
     }
+    
+    func numberOfSections(in scoreboardTableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func sortScores() {
+        scoreboard.sort(by: { $0.score > $1.score })
+    }
+    
+    
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-    }
-    */
 
 }

@@ -322,6 +322,15 @@ class GameViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        // Remove all bubbles from view
+        for subview in self.view.subviews {
+            if subview is BubbleView {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScoreViewSegue" {
             let scoreViewController = segue.destination as! ScoreViewController
