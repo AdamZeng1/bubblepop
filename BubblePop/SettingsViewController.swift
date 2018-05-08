@@ -32,8 +32,8 @@ class SettingsViewController: UIViewController {
             maxBubblesSlider.value = Float(toSliderValue(limit: gameSettings.maxBubbles))
         } catch {
             let gameSettings = GameSettings()
-            gameTimeSlider.value = Float(gameSettings.gameTime)
-            maxBubblesSlider.value = Float(gameSettings.maxBubbles)
+            gameTimeSlider.value = Float(toSliderValue(time: gameSettings.gameTime))
+            maxBubblesSlider.value = Float(toSliderValue(limit: gameSettings.maxBubbles))
         }
         
         gameTimeSliderChanged(self)

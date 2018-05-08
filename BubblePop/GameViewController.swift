@@ -68,10 +68,7 @@ class GameViewController: UIViewController {
         }
         
         timerLabel.text = timeFormatted(timeLeft)
-
-//        highScoreLabel.text = String(highScore)
         loadHighScore()
-        showHighScore()
     }
     
     func loadHighScore() {
@@ -79,15 +76,16 @@ class GameViewController: UIViewController {
             var scoreboard = try DataStorage().loadScoreboard()
             scoreboard.sort(by: { $0.score > $1.score })
             highScore = scoreboard[0].score
+            highScoreLabel.text = String(highScore)
         } catch {
             highScore = 0
         }
     }
     
-    func showHighScore() {
+    func checkHighScore() {
         if score > highScore {
             highScore = score
-            highScoreLabel.text = String(score)
+            highScoreLabel.text = String(highScore)
         }
     }
     
@@ -139,7 +137,6 @@ class GameViewController: UIViewController {
                     timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
                 }
                 
-//                timerLabel.text = String(timeLeft)
                 timerLabel.text = timeFormatted(timeLeft)
                 
                 // Add more bubbles below the max number
@@ -280,7 +277,7 @@ class GameViewController: UIViewController {
         self.score += points
         
         scoreLabel.text = String(self.score)
-        showHighScore()
+        checkHighScore()
         
         /// for debugging
         let currentColor = sender.bubbleType!.color.name
@@ -336,8 +333,6 @@ class GameViewController: UIViewController {
             let scoreViewController = segue.destination as! ScoreViewController
             scoreViewController.playerName = self.playerName
             scoreViewController.finalScore = self.score
-            
-
         }
     }
     
