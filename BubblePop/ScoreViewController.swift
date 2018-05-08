@@ -1,5 +1,5 @@
 //
-//  ScoreboardViewController.swift
+//  ScoreViewController.swift
 //  BubblePop
 //
 //  Created by Audwin on 6/5/18.
@@ -12,12 +12,18 @@ class ScoreViewController: UIViewController {
     
     @IBOutlet weak var finalScoreLabel: UILabel!
     
+    var playerName: String?
     var finalScore: Int!
+    
+    let dataStorage: DataStorage = DataStorage()
+    var scoreboard: [Scoreboard] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        finalScoreLabel.text = "Final score is \(finalScore!)"
+        if let name = playerName {
+            finalScoreLabel.text = "Name is \(name) \n Final score is \(finalScore!)"
+        }
     }
 
     override func didReceiveMemoryWarning() {

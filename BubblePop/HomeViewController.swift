@@ -51,15 +51,20 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         performSegue(withIdentifier: "SettingsViewSegue", sender: nil)
     }
     
+    @IBAction func scoreboardButtonTapped(_ sender: Any) {
+        performSegue(withIdentifier: "ScoreViewSegue", sender: nil)
+    }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "GameViewSegue" {
             let gameViewController = segue.destination as! GameViewController
             do {
                 gameViewController.gameSettings = try DataStorage().loadGameSettings()
+                gameViewController.playerName = nameTextField.text
             } catch {
                 gameViewController.gameSettings = GameSettings()
             }
-//            gameViewController.playerName = nameTextField.text
+
 //            gameViewController.gameSettings = self.gameSettings
         }
     }

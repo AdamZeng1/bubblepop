@@ -56,6 +56,9 @@
                                 <rect key="frame" x="212" y="446" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Play" image="button-scoreboard"/>
+                                <connections>
+                                    <action selector="scoreboardButtonTapped:" destination="QFQ-0R-SG0" eventType="touchUpInside" id="pga-Ak-N9y"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -65,6 +68,7 @@
                         <outlet property="nameTextField" destination="KCV-7q-mWe" id="dVN-yw-NfI"/>
                         <segue destination="BYZ-38-t0r" kind="show" identifier="GameViewSegue" id="tgf-pd-XXU"/>
                         <segue destination="0aW-h9-ODg" kind="show" identifier="SettingsViewSegue" id="LBY-JQ-nFO"/>
+                        <segue destination="51G-c0-Gn6" kind="show" identifier="ScoreViewSegue" id="JCz-cD-cuE"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Qil-D9-GFw" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -88,7 +92,7 @@
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="60" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-8J-D7G" userLabel="Max Bubbles Chosen">
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="1:00" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SuA-8J-D7G" userLabel="Max Bubbles Chosen">
                                         <rect key="frame" x="0.0" y="48" width="343" height="38"/>
                                         <fontDescription key="fontDescription" name="FluoGums" family="Fluo Gums" pointSize="17"/>
                                         <nil key="textColor"/>
@@ -208,7 +212,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q1o-h9-cD9" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="tYj-we-R5d" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="-620" y="882"/>
+            <point key="canvasLocation" x="-620" y="880"/>
         </scene>
         <!--Game View Controller-->
         <scene sceneID="tne-QT-ifu">
@@ -318,21 +322,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="SCOREBOARD" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="4Dj-24-MCb" userLabel="Scoreboard Label">
+                                <rect key="frame" x="65" y="69" width="244" height="38"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" name="FluoGums" family="Fluo Gums" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" usesAttributedText="YES" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gHt-Pu-4o5">
-                                <rect key="frame" x="19" y="112" width="337" height="95"/>
+                                <rect key="frame" x="19" y="115" width="337" height="95"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <attributedString key="attributedText">
                                     <fragment content="Final Score">
                                         <attributes>
                                             <font key="NSFont" size="17" name="Rockwell-Regular"/>
-                                            <paragraphStyle key="NSParagraphStyle" alignment="left" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
+                                            <paragraphStyle key="NSParagraphStyle" alignment="center" lineBreakMode="wordWrapping" baseWritingDirection="natural" tighteningFactorForTruncation="0.0"/>
                                         </attributes>
                                     </fragment>
                                 </attributedString>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CfW-3N-H1p" userLabel="Home Button">
-                                <rect key="frame" x="137" y="283" width="100" height="100"/>
+                                <rect key="frame" x="137" y="547" width="100" height="100"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Home" image="button-home"/>
                                 <connections>
@@ -350,7 +361,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vhh-qx-I1k" userLabel="First Responder" sceneMemberID="firstResponder"/>
                 <exit id="jFQ-Xf-dhc" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="936.79999999999995" y="133.5832083958021"/>
+            <point key="canvasLocation" x="137" y="879"/>
         </scene>
     </scenes>
     <resources>
@@ -361,4 +372,7 @@
         <image name="button-scoreboard" width="700" height="700"/>
         <image name="button-settings" width="700" height="700"/>
     </resources>
+    <inferredMetricsTieBreakers>
+        <segue reference="JCz-cD-cuE"/>
+    </inferredMetricsTieBreakers>
 </document>

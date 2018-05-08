@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct DataStorage : Codable {
+struct DataStorage: Codable {
     let gameSettingsArchiveURL: URL
     let scoreboardArchiveURL: URL
     
@@ -46,10 +46,23 @@ struct DataStorage : Codable {
         try write(data, to: gameSettingsArchiveURL)
     }
     
+    func saveData(scores: [Scoreboard]) throws {
+        let data = try JSONEncoder().encode(scores)
+        try write(data, to: scoreboardArchiveURL)
+    }
+    
     func loadGameSettings() throws -> GameSettings {
         let data = try read(from: gameSettingsArchiveURL)
         if let settings = try? JSONDecoder().decode(GameSettings.self, from: data) {
             return settings
+        }
+        throw DataError.dataNotFound
+    }
+    
+    func loadScoreboard() throws -> [Scoreboard] {
+        let data = try read(from: scoreboardArchiveURL)
+        if let scoreboard = try? JSONDecoder().decode([Scoreboard].self, from: data) {
+            return scoreboard
         }
         throw DataError.dataNotFound
     }

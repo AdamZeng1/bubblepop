@@ -39,14 +39,14 @@ class GameViewController: UIViewController {
     
     var countdownLeft = 3
     
-    var playerName: String?
     var gameSettings: GameSettings?
+    var playerName: String?
     
     var timeLeft = 60
     var maxBubbles = 15
     
     var score: Int = 0
-    var highScore: Int = 55
+    var highScore: Int = 0
     
     var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
                                  BubbleType(color: .magenta, points: 2),
@@ -67,15 +67,26 @@ class GameViewController: UIViewController {
             maxBubbles = settings.maxBubbles
         }
         
-        highScoreLabel.text = String(highScore)
-        
-        showHighScore()
         timerLabel.text = timeFormatted(timeLeft)
-        
+
+//        highScoreLabel.text = String(highScore)
+        loadHighScore()
+        showHighScore()
+    }
+    
+    func loadHighScore() {
+        do {
+            var scoreboard = try DataStorage().loadScoreboard()
+            scoreboard.sort(by: { $0.score > $1.score })
+            highScore = scoreboard[0].score
+        } catch {
+            highScore = 0
+        }
     }
     
     func showHighScore() {
-        if score > Int(highScoreLabel.text!)! {
+        if score > highScore {
+            highScore = score
             highScoreLabel.text = String(score)
         }
     }
@@ -214,7 +225,7 @@ class GameViewController: UIViewController {
         if validLocation {
             newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
-//            self.view.sendSubview(toBack: newBubble)
+            self.view.sendSubview(toBack: newBubble)
         }
     }
     
@@ -314,7 +325,10 @@ class GameViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "ScoreViewSegue" {
             let scoreViewController = segue.destination as! ScoreViewController
+            scoreViewController.playerName = self.playerName
             scoreViewController.finalScore = self.score
+            
+
         }
     }
     

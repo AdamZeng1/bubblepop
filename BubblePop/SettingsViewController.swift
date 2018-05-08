@@ -10,7 +10,6 @@ import UIKit
 
 class SettingsViewController: UIViewController {
 
-    
     @IBOutlet weak var gameTimeChosenLabel: UILabel!
     @IBOutlet weak var gameTimeSlider: UISlider!
     @IBOutlet weak var minGameTimeLabel: UILabel!

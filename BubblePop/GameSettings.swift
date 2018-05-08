@@ -8,8 +8,7 @@
 
 import Foundation
 
-struct GameSettings : Codable {
+struct GameSettings: Codable {
     var gameTime: Int = 60
     var maxBubbles: Int = 15
-
 }
