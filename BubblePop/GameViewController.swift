@@ -10,13 +10,14 @@ import UIKit
 import AVFoundation // for sound player
 import GameKit // for random number generator
 
-/// Extension to support UILabel animations
 extension UILabel {
+    /// Fading animation
     func fade() {
         self.alpha = 1.0
         UIView.animate(withDuration: 1.0, animations: { self.alpha = 0.0 })
     }
     
+    /// Blinking animation
     func blink() {
         self.alpha = 0.2
         UIView.animate(withDuration: 1.0, animations: { self.alpha = 1.0 },
@@ -53,21 +54,15 @@ class GameViewController: UIViewController {
     var highScore: Int = 0
 
     var bubbles: [BubbleType] = []
-    
-//    var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
-//                                 BubbleType(color: .magenta, points: 2),
-//                                 BubbleType(color: .green, points: 5),
-//                                 BubbleType(color: .blue, points: 8),
-//                                 BubbleType(color: .black, points: 10)]
-    
-    let randomSource: GKRandomSource = GKARC4RandomSource()
-    
     var previousBubble: BubbleType?
     var isComboPoint: Bool = false
     
+    let randomSource: GKRandomSource = GKARC4RandomSource()
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         bubbles.append(BubbleType(color: .red, points: 1))
         bubbles.append(BubbleType(color: pink, points: 2))
         bubbles.append(BubbleType(color: .green, points: 5))
@@ -120,6 +115,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// Function to format the time text
     func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60
@@ -158,6 +154,20 @@ class GameViewController: UIViewController {
                 }
                 
                 // Randomly remove bubbles
+                if timeLeft % removalRate == 0 {
+                    var removalCount = randomSource.nextInt(upperBound: bubbleCount())
+                    for subview in self.view.subviews {
+                        if subview.tag > 0 {
+                            if removalCount > 0 {
+                                removeBubble(subview as! BubbleView)
+                                removalCount -= 1
+                            }
+                            else {
+                                break
+                            }
+                        }
+                    }
+                }
                 
             }
         }
@@ -180,6 +190,12 @@ class GameViewController: UIViewController {
             newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
             self.view.sendSubview(toBack: newBubble)
+            
+            // animate growing bubble
+            newBubble.transform = CGAffineTransform(scaleX: 0, y: 0)
+            UIView.animate(withDuration: 0.1, animations: {
+                newBubble.transform = CGAffineTransform.identity
+            })
         }
     }
     
@@ -242,7 +258,7 @@ class GameViewController: UIViewController {
     func randomTag() -> Int {
         // loop until a valid tag is available between range 1 to 50
         while true {
-            let randomTag = Int(arc4random_uniform(50) + 1)
+            let randomTag = randomSource.nextInt(upperBound: 50) + 1
             guard let _ = self.view.viewWithTag(randomTag) else {
                 return randomTag
             }
@@ -258,6 +274,31 @@ class GameViewController: UIViewController {
             }
         }
         return count
+    }
+    
+    /// Method to remove a bubble from the view
+    func removeBubble(_ bubble: BubbleView) {
+        if let bubbleInView = self.view.viewWithTag(bubble.tag) {
+            
+            // animate fading bubble
+            UIView.animate(withDuration: 0.5, delay: 0,
+                           options: .curveEaseIn,
+                           animations: {
+                            bubbleInView.center.y = bubbleInView.center.y - 10
+                            bubbleInView.alpha = 0.02
+                        }) { (_) in
+                            bubbleInView.removeFromSuperview()
+                        }
+        }
+    }
+    
+    /// Method to remove all bubbles in view
+    func removeAllBubbles() {
+        for subview in self.view.subviews {
+            if subview is BubbleView {
+                subview.removeFromSuperview()
+            }
+        }
     }
     
     /// Function to calculate points earned
@@ -357,12 +398,7 @@ class GameViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
-        // Remove all bubbles from view
-        for subview in self.view.subviews {
-            if subview is BubbleView {
-                subview.removeFromSuperview()
-            }
-        }
+        removeAllBubbles()
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {

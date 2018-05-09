@@ -388,6 +388,7 @@
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <state key="normal" title="Home" image="button-home"/>
                                 <connections>
+                                    <action selector="homeButtonTapped:" destination="51G-c0-Gn6" eventType="touchUpInside" id="UHw-IT-Qo4"/>
                                     <segue destination="jFQ-Xf-dhc" kind="unwind" unwindAction="unwindToHomeWithUnwindSegue:" id="C5W-pg-vFz"/>
                                 </connections>
                             </button>

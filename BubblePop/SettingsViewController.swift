@@ -135,7 +135,9 @@ class SettingsViewController: UIViewController {
         maxBubblesChosenLabel.text = String(limit)
     }
     
-    @IBAction func homeButtonTapped(_ sender: Any) {
+    @IBAction func homeButtonTapped(_ sender: UIButton) {
+        sender.shrink()
+        
         let settings = GameSettings(gameTime: toTimeValue(Int(gameTimeSlider.value)), maxBubbles: Int(maxBubblesChosenLabel.text!)!)
         do {
             try dataStorage.saveData(settings: settings)
@@ -146,12 +148,12 @@ class SettingsViewController: UIViewController {
 //        performSegue(withIdentifier: "HomeViewSegue", sender: self)
     }
     
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
 //        if segue.identifier == "HomeViewSegue" {
 //            let homeViewController = segue.destination as! HomeViewController
 //            homeViewController.gameSettings = self.gameSettings
 //        }
-    }
+//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()

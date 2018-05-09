@@ -11,7 +11,6 @@
 		1F27B718209FD52B002E03C6 /* GameSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27B717209FD52B002E03C6 /* GameSettings.swift */; };
 		1F27B71A20A0A48F002E03C6 /* DataStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27B71920A0A48F002E03C6 /* DataStorage.swift */; };
 		1F27B71D20A0A66F002E03C6 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 1F27B71B20A0A66F002E03C6 /* Main.storyboard */; };
-		1F27B71F20A0A742002E03C6 /* TableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27B71E20A0A742002E03C6 /* TableViewController.swift */; };
 		1F27B72120A11D55002E03C6 /* Scoreboard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F27B72020A11D55002E03C6 /* Scoreboard.swift */; };
 		1F45EC18208CD99900E47B56 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC17208CD99900E47B56 /* AppDelegate.swift */; };
 		1F45EC1A208CD99900E47B56 /* GameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1F45EC19208CD99900E47B56 /* GameViewController.swift */; };
@@ -51,7 +50,6 @@
 		1F27B717209FD52B002E03C6 /* GameSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GameSettings.swift; sourceTree = "<group>"; };
 		1F27B71920A0A48F002E03C6 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
 		1F27B71C20A0A66F002E03C6 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		1F27B71E20A0A742002E03C6 /* TableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableViewController.swift; sourceTree = "<group>"; };
 		1F27B72020A11D55002E03C6 /* Scoreboard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scoreboard.swift; sourceTree = "<group>"; };
 		1F45EC14208CD99900E47B56 /* BubblePop.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BubblePop.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1F45EC17208CD99900E47B56 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -125,21 +123,16 @@
 			children = (
 				1FDC135F209EE5DE00331C9F /* Font Assets */,
 				1FDC135C209EBF4C00331C9F /* Sound Assets */,
+				1FD1095D20A31BEE001C99A2 /* Model */,
+				1FD1095E20A32847001C99A2 /* View */,
 				1F45EC17208CD99900E47B56 /* AppDelegate.swift */,
 				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
-				1F27B71E20A0A742002E03C6 /* TableViewController.swift */,
 				1FDC135A209EB45200331C9F /* HomeViewController.swift */,
 				1F45EC19208CD99900E47B56 /* GameViewController.swift */,
 				1FDC1358209E849100331C9F /* ScoreViewController.swift */,
 				1F27B715209FD258002E03C6 /* SettingsViewController.swift */,
-				1F27B71920A0A48F002E03C6 /* DataStorage.swift */,
-				1F27B72020A11D55002E03C6 /* Scoreboard.swift */,
-				1F27B717209FD52B002E03C6 /* GameSettings.swift */,
 				1F27B71B20A0A66F002E03C6 /* Main.storyboard */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
-				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
-				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
-				1FDC1360209F1C5A00331C9F /* PointView.swift */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePop;
@@ -161,6 +154,26 @@
 				1F45EC39208CD99A00E47B56 /* Info.plist */,
 			);
 			path = BubblePopUITests;
+			sourceTree = "<group>";
+		};
+		1FD1095D20A31BEE001C99A2 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				1F27B71920A0A48F002E03C6 /* DataStorage.swift */,
+				1F27B72020A11D55002E03C6 /* Scoreboard.swift */,
+				1F27B717209FD52B002E03C6 /* GameSettings.swift */,
+				1FF4E6BB2096C55300F00842 /* BubbleType.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		1FD1095E20A32847001C99A2 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				1FF4E6BD2096C77200F00842 /* BubbleView.swift */,
+				1FDC1360209F1C5A00331C9F /* PointView.swift */,
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 		1FDC135C209EBF4C00331C9F /* Sound Assets */ = {
@@ -287,10 +300,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */,
 				1FBE54F7208DACFC001E00DB /* Assets.xcassets in Resources */,
-				1FDC135E209EC22100331C9F /* Fluo Gums.ttf in Resources */,
+				1F45EC22208CD99A00E47B56 /* LaunchScreen.storyboard in Resources */,
 				1F27B71D20A0A66F002E03C6 /* Main.storyboard in Resources */,
+				1FDC135E209EC22100331C9F /* Fluo Gums.ttf in Resources */,
 				1FDC1357209D321800331C9F /* popBGM.mp3 in Resources */,
 				1FBE5BDE208DCC39001E00DB /* popSFX.m4a in Resources */,
 			);
@@ -324,7 +337,6 @@
 				1FF4E6BE2096C77200F00842 /* BubbleView.swift in Sources */,
 				1FDC1359209E849100331C9F /* ScoreViewController.swift in Sources */,
 				1FDC1361209F1C5A00331C9F /* PointView.swift in Sources */,
-				1F27B71F20A0A742002E03C6 /* TableViewController.swift in Sources */,
 				1FF4E6BC2096C55300F00842 /* BubbleType.swift in Sources */,
 				1F27B71A20A0A48F002E03C6 /* DataStorage.swift in Sources */,
 				1FDC135B209EB45200331C9F /* HomeViewController.swift in Sources */,

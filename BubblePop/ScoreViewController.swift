@@ -65,6 +65,10 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
         scoreboard.sort(by: { $0.score > $1.score })
     }
     
+    @IBAction func homeButtonTapped(_ sender: UIButton) {
+        sender.shrink()
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -94,7 +98,8 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         // alternate the cell background color
         if indexPath.row % 2 == 1 {
-            cell.backgroundColor = .lightGray
+            let gainsboro = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1)
+            cell.backgroundColor = gainsboro
         }
         else {
             cell.backgroundColor = .clear

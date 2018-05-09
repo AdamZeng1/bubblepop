@@ -8,6 +8,20 @@
 
 import UIKit
 
+extension UIButton {
+    /// Shrinking animation
+    func shrink() {
+        UIView.animate(withDuration: 0.1, animations: {
+            self.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (_) in
+            
+            UIView.animate(withDuration: 0.1, animations: {
+                self.transform = CGAffineTransform.identity
+            })
+        }
+    }
+}
+
 class HomeViewController: UIViewController, UITextFieldDelegate {
     
     // Outlets
@@ -27,7 +41,9 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         return true
     }
 
-    @IBAction func playButtonTapped(_ sender: Any) {
+    @IBAction func playButtonTapped(_ sender: UIButton) {
+        sender.shrink()
+        
         if nameTextField.text == "" {
             
             UIView.animate(withDuration: 0.1, animations: {
@@ -48,24 +64,12 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     }
     
     @IBAction func settingsButtonTapped(_ sender: UIButton) {
-        
-//        UIView.animate(withDuration: 0.5, animations: {
-//            sender.frame = CGRect(x: sender.frame.origin.x + 25, y: sender.frame.origin.y + 25, width: sender.frame.size.width, height: sender.frame.size.height)
-//        })
-        
-        UIView.animate(withDuration: 0.2, animations: {
-            sender.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
-        }) { (_) in
-            
-            UIView.animate(withDuration: 0.2, animations: {
-                sender.transform = CGAffineTransform.identity
-            })
-        }
-        
+        sender.shrink()
         performSegue(withIdentifier: "SettingsViewSegue", sender: nil)
     }
     
-    @IBAction func scoreboardButtonTapped(_ sender: Any) {
+    @IBAction func scoreboardButtonTapped(_ sender: UIButton) {
+        sender.shrink()
         performSegue(withIdentifier: "ScoreViewSegue", sender: nil)
     }
     
