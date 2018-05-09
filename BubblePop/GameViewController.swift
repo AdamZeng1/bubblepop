@@ -10,17 +10,19 @@ import UIKit
 import AVFoundation // for sound player
 import GameKit // for random number generator
 
-extension UIColor {
-    var name: String? {
-        switch self {
-        case UIColor.black: return "black"
-        case UIColor.red: return "red"
-        case UIColor.green: return "green"
-        case UIColor.blue: return "blue"
-        case UIColor.magenta: return "magenta"
-        default: return nil
-        }
+/// Extension to support UILabel animations
+extension UILabel {
+    func fade() {
+        self.alpha = 1.0
+        UIView.animate(withDuration: 1.0, animations: { self.alpha = 0.0 })
     }
+    
+    func blink() {
+        self.alpha = 0.2
+        UIView.animate(withDuration: 1.0, animations: { self.alpha = 1.0 },
+                       completion: nil)
+    }
+    
 }
 
 
@@ -31,28 +33,32 @@ class GameViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var highScoreLabel: UILabel!
     
+    let pink: UIColor = UIColor(red: 249/255.0, green: 174/255.0, blue: 200/255.0, alpha: 1)
+    let customBlue: UIColor = UIColor(red: 113/255.0, green: 181/255.0, blue: 246/255.0, alpha: 1)
+    
     var countdownTimer: Timer?
     var gameTimer: Timer?
-    
     var audioPlayerBGM: AVAudioPlayer?
     var audioPlayerSFX: AVAudioPlayer?
-    
-    var countdownLeft = 3
     
     var gameSettings: GameSettings?
     var playerName: String?
     
-    var timeLeft = 60
-    var maxBubbles = 15
+    var countdownLeft: Int = 3
+    var timeLeft: Int = 60
+    var maxBubbles: Int = 15
+    let removalRate: Int = 3
     
     var score: Int = 0
     var highScore: Int = 0
+
+    var bubbles: [BubbleType] = []
     
-    var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
-                                 BubbleType(color: .magenta, points: 2),
-                                 BubbleType(color: .green, points: 5),
-                                 BubbleType(color: .blue, points: 8),
-                                 BubbleType(color: .black, points: 10)]
+//    var bubbles: [BubbleType] = [BubbleType(color: .red, points: 1),
+//                                 BubbleType(color: .magenta, points: 2),
+//                                 BubbleType(color: .green, points: 5),
+//                                 BubbleType(color: .blue, points: 8),
+//                                 BubbleType(color: .black, points: 10)]
     
     let randomSource: GKRandomSource = GKARC4RandomSource()
     
@@ -61,6 +67,12 @@ class GameViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        bubbles.append(BubbleType(color: .red, points: 1))
+        bubbles.append(BubbleType(color: pink, points: 2))
+        bubbles.append(BubbleType(color: .green, points: 5))
+        bubbles.append(BubbleType(color: customBlue, points: 8))
+        bubbles.append(BubbleType(color: .black, points: 10))
         
         if let settings = gameSettings {
             timeLeft = settings.gameTime
@@ -71,6 +83,7 @@ class GameViewController: UIViewController {
         loadHighScore()
     }
     
+    /// Method to load the high score from data storage
     func loadHighScore() {
         do {
             var scoreboard = try DataStorage().loadScoreboard()
@@ -89,26 +102,23 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// Method to update view during start countdown
     @objc func updateCountdown() {
-        // Only counts down when the label is not hidden
-        if !countdownLabel.isHidden {
-            countdownLeft -= 1
-        }
+        countdownLeft -= 1
         
         // Stop countdown, hide the countdown label and play BGM sound when time is zero (game starts)
         if countdownLeft <= 0 {
             countdownTimer?.invalidate()
             countdownTimer = nil
             
-            countdownLabel.isHidden = true
-            
             playSound(title: "popBGM", extensionCode: "mp3")
         }
         else {
             countdownLabel.text = String(countdownLeft)
+            countdownLabel.fade()
             
             // Flash the countdown label
-            countdownLabel.isHidden = !countdownLabel.isHidden
+//            countdownLabel.isHidden = !countdownLabel.isHidden
         }
     }
     
@@ -118,6 +128,7 @@ class GameViewController: UIViewController {
         return String(format: "%01d:%02d", minutes, seconds)
     }
     
+    /// Method to update view during play time
     @objc func updateGameTimer() {
         if countdownLeft <= 0 {
             if timeLeft <= 0 {
@@ -135,6 +146,7 @@ class GameViewController: UIViewController {
                 if timeLeft <= 10 {
                     timerLabel.textColor = .red
                     timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
+                    timerLabel.blink()
                 }
                 
                 timerLabel.text = timeFormatted(timeLeft)
@@ -152,6 +164,25 @@ class GameViewController: UIViewController {
             }
         }
 
+    }
+    
+    /// Method to create a new bubble randomly
+    @objc func createBubble() {
+        let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
+        let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
+        
+        let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
+        newBubble.bubbleType = randomBubbleType()
+        setBubbleImage(of: newBubble)
+        
+        let validLocation = isValidLocation(of: newBubble)
+        if validLocation {
+            newBubble.tag = randomTag();
+            
+            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
+            self.view.addSubview(newBubble)
+            self.view.sendSubview(toBack: newBubble)
+        }
     }
     
     /// Function to randomly decide the probability of appearance of bubble
@@ -183,11 +214,11 @@ class GameViewController: UIViewController {
             switch color {
             case UIColor.red:
                 newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
-            case UIColor.magenta:
+            case pink:
                 newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
             case UIColor.green:
                 newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
-            case UIColor.blue:
+            case customBlue:
                 newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
             case UIColor.black:
                 newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
@@ -210,22 +241,17 @@ class GameViewController: UIViewController {
         return true
     }
     
-    @objc func createBubble() {
-        let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
-        let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
-
-        let newBubble = BubbleView(frame: CGRect(x: randomX, y: randomY, width: 80, height: 80))
-        newBubble.bubbleType = randomBubbleType()
-        setBubbleImage(of: newBubble)
-        
-        let validLocation = isValidLocation(of: newBubble)
-        if validLocation {
-            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
-            self.view.addSubview(newBubble)
-            self.view.sendSubview(toBack: newBubble)
+    func randomTag() -> Int {
+        // loop until a valid tag is available between range 1 to 50
+        while true {
+            let randomTag = Int(arc4random_uniform(50) + 1)
+            guard let _ = self.view.viewWithTag(randomTag) else {
+                return randomTag
+            }
         }
     }
     
+    /// Function to return the total of bubbles in view
     func bubbleCount() -> Int {
         var count: Int = 0
         for subview in self.view.subviews {
@@ -251,6 +277,7 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// Method to show the points gained after popping a bubble
     func showPointView(for currentBubble: BubbleView, gainedPoints: Int) {
         let pointView: PointView = PointView(frame: CGRect(x: currentBubble.frame.minX, y: currentBubble.frame.minY, width: 150, height: 150))
         
@@ -266,8 +293,18 @@ class GameViewController: UIViewController {
             pointView.text = "+\(gainedPoints)"
         }
         self.view.addSubview(pointView)
+        
+        // animate the points gained to float upwards and fading slowly
+        UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
+            pointView.center.y = pointView.center.y - 50
+            pointView.alpha = 0.02
+        }) { (_) in
+            pointView.removeFromSuperview()
+        }
+
     }
     
+    /// Event handler when a bubble is popped
     @IBAction func bubblePopped(_ sender: BubbleView) {
         playSound(title: "popSFX", extensionCode: "m4a")
         
@@ -278,10 +315,6 @@ class GameViewController: UIViewController {
         
         scoreLabel.text = String(self.score)
         checkHighScore()
-        
-        /// for debugging
-        let currentColor = sender.bubbleType!.color.name
-        print("\(String(describing: currentColor!)) popped | +\(points) point | score = \(score)")
         
         sender.removeFromSuperview()
     }
@@ -313,6 +346,7 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        countdownLabel.fade()
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
         
         gameTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateGameTimer), userInfo: nil, repeats: true)
