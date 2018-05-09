@@ -22,7 +22,6 @@ extension UILabel {
         UIView.animate(withDuration: 1.0, animations: { self.alpha = 1.0 },
                        completion: nil)
     }
-    
 }
 
 
@@ -33,6 +32,7 @@ class GameViewController: UIViewController {
     @IBOutlet weak var scoreLabel: UILabel!
     @IBOutlet weak var highScoreLabel: UILabel!
     
+    // Custom UIColors
     let pink: UIColor = UIColor(red: 249/255.0, green: 174/255.0, blue: 200/255.0, alpha: 1)
     let customBlue: UIColor = UIColor(red: 113/255.0, green: 181/255.0, blue: 246/255.0, alpha: 1)
     
@@ -111,14 +111,12 @@ class GameViewController: UIViewController {
             countdownTimer?.invalidate()
             countdownTimer = nil
             
+            countdownLabel.isHidden = true
             playSound(title: "popBGM", extensionCode: "mp3")
         }
         else {
             countdownLabel.text = String(countdownLeft)
             countdownLabel.fade()
-            
-            // Flash the countdown label
-//            countdownLabel.isHidden = !countdownLabel.isHidden
         }
     }
     
@@ -316,7 +314,12 @@ class GameViewController: UIViewController {
         scoreLabel.text = String(self.score)
         checkHighScore()
         
-        sender.removeFromSuperview()
+        // animate shrinking bubble
+        UIView.animate(withDuration: 0.1, animations: {
+            sender.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+        }) { (_) in
+            sender.removeFromSuperview()
+        }
     }
     
     /// Method to play background music and bubble popped SFX

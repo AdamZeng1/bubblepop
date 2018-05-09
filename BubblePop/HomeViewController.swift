@@ -47,7 +47,21 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         }
     }
     
-    @IBAction func settingsButtonTapped(_ sender: Any) {
+    @IBAction func settingsButtonTapped(_ sender: UIButton) {
+        
+//        UIView.animate(withDuration: 0.5, animations: {
+//            sender.frame = CGRect(x: sender.frame.origin.x + 25, y: sender.frame.origin.y + 25, width: sender.frame.size.width, height: sender.frame.size.height)
+//        })
+        
+        UIView.animate(withDuration: 0.2, animations: {
+            sender.transform = CGAffineTransform(scaleX: 1.2, y: 1.2)
+        }) { (_) in
+            
+            UIView.animate(withDuration: 0.2, animations: {
+                sender.transform = CGAffineTransform.identity
+            })
+        }
+        
         performSegue(withIdentifier: "SettingsViewSegue", sender: nil)
     }
     
@@ -59,13 +73,11 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         if segue.identifier == "GameViewSegue" {
             let gameViewController = segue.destination as! GameViewController
             do {
-                gameViewController.gameSettings = try DataStorage().loadGameSettings()
                 gameViewController.playerName = nameTextField.text
+                gameViewController.gameSettings = try DataStorage().loadGameSettings()
             } catch {
                 gameViewController.gameSettings = GameSettings()
             }
-
-//            gameViewController.gameSettings = self.gameSettings
         }
     }
     

@@ -28,7 +28,7 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
         do {
             scoreboard = try dataStorage.loadScoreboard()
         } catch {
-            print("Error loading scoreaboard")
+            print("Error loading scoreboard")
         }
         
         sortScores()
