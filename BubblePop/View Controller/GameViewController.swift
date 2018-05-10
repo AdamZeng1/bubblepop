@@ -52,6 +52,8 @@ class GameViewController: UIViewController {
     var maxBubbles: Int = 15
     let removalRate: Int = 3
     
+    var changeSpeedTime: Int = 0
+    var originalTime: Int = 0
     var floatSpeed: CGFloat = 1.0
     
     var score: Int = 0
@@ -136,6 +138,17 @@ class GameViewController: UIViewController {
             self.performSegue(withIdentifier: "ScoreViewSegue", sender: self)
         }
         else {
+            // scale new floating speed to original time
+            let newSpeedTime = self.changeSpeedTime - (self.originalTime / 6)
+            
+            // increase speed every certain time:
+            // [originalTime : changeSpeedTime]
+            // [15s:2s, 30s:5s, 60s:10s, 90s:15s, 120s:20s]
+            if timeLeft == changeSpeedTime {
+                self.changeSpeedTime = newSpeedTime
+                self.floatSpeed += 0.05
+            }
+            
             timeLeft -= 1
             
             if timeLeft <= 10 {
@@ -453,6 +466,10 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
+        // keep original time and set the time when to increase speed
+        originalTime = timeLeft
+        changeSpeedTime = originalTime
+        
         countdownLabel.fade()
         countdownTimer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(updateCountdown), userInfo: nil, repeats: true)
         
