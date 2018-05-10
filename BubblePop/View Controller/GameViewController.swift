@@ -42,6 +42,8 @@ class GameViewController: UIViewController {
     var audioPlayerBGM: AVAudioPlayer?
     var audioPlayerSFX: AVAudioPlayer?
     
+    var speed: CGPoint = CGPoint(x: -1.0, y: -1.0)
+    
     var gameSettings: GameSettings?
     var playerName: String?
     
@@ -115,13 +117,6 @@ class GameViewController: UIViewController {
         }
     }
     
-    /// Function to format the time text
-    func timeFormatted(_ totalSeconds: Int) -> String {
-        let seconds: Int = totalSeconds % 60
-        let minutes: Int = (totalSeconds / 60) % 60
-        return String(format: "%01d:%02d", minutes, seconds)
-    }
-    
     /// Method to update view during play time
     @objc func updateGameTimer() {
         if countdownLeft <= 0 {
@@ -136,14 +131,22 @@ class GameViewController: UIViewController {
             else {
                 timeLeft -= 1
                 
-                // Emphasize there is short game time left
                 if timeLeft <= 10 {
-                    timerLabel.textColor = .red
-                    timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
-                    timerLabel.blink()
+                    // Emphasize there is short game time left
+                    emphasizeTimeUp()
                 }
-                
                 timerLabel.text = timeFormatted(timeLeft)
+                
+                /// ANIMATE
+                for subview in self.view.subviews {
+                    if subview is BubbleView {
+                        UIView.animate(withDuration: 1.0, delay: 0,
+                                       options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseIn],
+                                       animations: {
+                                        subview.center.y -= 20
+                        }, completion: nil)
+                    }
+                }
                 
                 // Add more bubbles below the max number
                 if bubbleCount() < maxBubbles {
@@ -153,7 +156,7 @@ class GameViewController: UIViewController {
                     }
                 }
                 
-                // Randomly remove bubbles
+                // Randomly remove bubbles periodically
                 if timeLeft % removalRate == 0 {
                     var removalCount = randomSource.nextInt(upperBound: bubbleCount())
                     for subview in self.view.subviews {
@@ -169,9 +172,52 @@ class GameViewController: UIViewController {
                     }
                 }
                 
+                // animate moving bubbles
+//                for subview in self.view.subviews {
+//                    if subview is BubbleView {
+//                        UIView.animate(withDuration: 1.0, delay: 0,
+//                                       options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseIn],
+//                                       animations: {
+//                                        subview.center.y -= 20
+//                        }) { (_) in
+//                            UIView.animate(withDuration: 1.0, delay: 0,
+//                                           options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseIn],
+//                                           animations: {
+//                                            subview.center.y -= 20
+//                        })
+//                        }
+//                    }
+//                }
+                
+                /* WORKS */
+                for subview in self.view.subviews {
+                    if subview is BubbleView {
+                        UIView.animate(withDuration: 1.0, delay: 0,
+                                       options: [.allowUserInteraction, .allowAnimatedContent, .curveEaseIn],
+                                       animations: {
+                                        subview.center.y -= 20
+                        }, completion: nil)
+                    }
+                }
+
+                
             }
         }
 
+    }
+    
+    /// Function to format the time text
+    func timeFormatted(_ totalSeconds: Int) -> String {
+        let seconds: Int = totalSeconds % 60
+        let minutes: Int = (totalSeconds / 60) % 60
+        return String(format: "%01d:%02d", minutes, seconds)
+    }
+    
+    /// Method to emphasize not much game time left
+    func emphasizeTimeUp() {
+        timerLabel.textColor = .red
+        timerLabel.font = UIFont.boldSystemFont(ofSize: timerLabel.font.pointSize)
+        timerLabel.blink()
     }
     
     /// Method to create a new bubble randomly
@@ -187,11 +233,29 @@ class GameViewController: UIViewController {
         if validLocation {
             newBubble.tag = randomTag();
             
-            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
+//            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
             self.view.sendSubview(toBack: newBubble)
             
             // animate growing bubble
+//            UIView.animate(withDuration: 3.0, delay: 0,
+//                           options: [.allowAnimatedContent, .allowUserInteraction],
+//                           animations: {
+//                            newBubble.center.y = newBubble.center.y - 300
+//            }, completion: nil)
+            
+//            newBubble.transform = CGAffineTransform(scaleX: 0, y: 0)
+//            UIView.animate(withDuration: 0.1, animations: {
+//                newBubble.transform = CGAffineTransform.identity
+//            }) { (_) in
+//                UIView.animate(withDuration: 10.0, delay: 0,
+//                               options: [.allowAnimatedContent, .allowUserInteraction],
+//                               animations: {
+//                                newBubble.transform = CGAffineTransform(translationX: self.speed.x, y: self.speed.y)
+//                }, completion: nil)
+//            }
+            //
+            /* WORKING */
             newBubble.transform = CGAffineTransform(scaleX: 0, y: 0)
             UIView.animate(withDuration: 0.1, animations: {
                 newBubble.transform = CGAffineTransform.identity
@@ -227,15 +291,20 @@ class GameViewController: UIViewController {
         if let color = newBubble.bubbleType?.color {
             switch color {
             case UIColor.red:
-                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
+                newBubble.image = UIImage(named: "bubble-red.png")
+//                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-red.png"), for: .normal)
             case pink:
-                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
+                newBubble.image = UIImage(named: "bubble-pink.png")
+//                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-magenta.png"), for: .normal)
             case UIColor.green:
-                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
+                newBubble.image = UIImage(named: "bubble-green.png")
+//                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-green.png"), for: .normal)
             case customBlue:
-                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
+                newBubble.image = UIImage(named: "bubble-blue.png")
+//                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-blue.png"), for: .normal)
             case UIColor.black:
-                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
+                newBubble.image = UIImage(named: "bubble-black.png")
+//                newBubble.setImage(UIImage.init(imageLiteralResourceName: "bubble-black.png"), for: .normal)
             default:
                 break
             }
@@ -281,10 +350,10 @@ class GameViewController: UIViewController {
         if let bubbleInView = self.view.viewWithTag(bubble.tag) {
             
             // animate fading bubble
-            UIView.animate(withDuration: 0.5, delay: 0,
-                           options: .curveEaseIn,
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn,
                            animations: {
-                            bubbleInView.center.y = bubbleInView.center.y - 10
+//                            bubbleInView.center.y = bubbleInView.center.y - 10
+                            bubbleInView.center.y -= 10
                             bubbleInView.alpha = 0.02
                         }) { (_) in
                             bubbleInView.removeFromSuperview()
@@ -335,7 +404,7 @@ class GameViewController: UIViewController {
         
         // animate the points gained to float upwards and fading slowly
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
-            pointView.center.y = pointView.center.y - 50
+            pointView.center.y -= 50
             pointView.alpha = 0.02
         }) { (_) in
             pointView.removeFromSuperview()
@@ -344,22 +413,53 @@ class GameViewController: UIViewController {
     }
     
     /// Event handler when a bubble is popped
-    @IBAction func bubblePopped(_ sender: BubbleView) {
-        playSound(title: "popSFX", extensionCode: "m4a")
+//    @IBAction func bubblePopped(_ sender: BubbleView) {
+//        playSound(title: "popSFX", extensionCode: "m4a")
+//
+//        let points = pointsGained(from: sender.bubbleType!)
+//        showPointView(for: sender, gainedPoints: points)
+//
+//        self.score += points
+//
+//        scoreLabel.text = String(self.score)
+//        checkHighScore()
+//
+//        // animate shrinking bubble
+//        UIView.animate(withDuration: 0.1, animations: {
+//            sender.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+//        }) { (_) in
+//            sender.removeFromSuperview()
+//        }
+//    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        let touch = touches.first
+        let touchLocation = touch?.location(in: self.view)
         
-        let points = pointsGained(from: sender.bubbleType!)
-        showPointView(for: sender, gainedPoints: points)
-        
-        self.score += points
-        
-        scoreLabel.text = String(self.score)
-        checkHighScore()
-        
-        // animate shrinking bubble
-        UIView.animate(withDuration: 0.1, animations: {
-            sender.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
-        }) { (_) in
-            sender.removeFromSuperview()
+        for subview in self.view.subviews {
+            if let bubble = subview as? BubbleView {
+                if (bubble.layer.presentation()?.hitTest(touchLocation!)) != nil {
+                    print("touches began!")
+                    
+                    playSound(title: "popSFX", extensionCode: "m4a")
+                    
+                    let points = pointsGained(from: bubble.bubbleType!)
+                    showPointView(for: bubble, gainedPoints: points)
+                    
+                    self.score += points
+                    
+                    scoreLabel.text = String(self.score)
+                    checkHighScore()
+                    
+                    // animate shrinking bubble
+                    UIView.animate(withDuration: 0.1, animations: {
+                        bubble.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
+                    }) { (_) in
+                        bubble.removeFromSuperview()
+                    }
+                }
+            }
+
         }
     }
     

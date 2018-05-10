@@ -9,6 +9,6 @@
 import Foundation
 import UIKit
 
-class BubbleView: UIButton {
+class BubbleView: UIImageView {
     var bubbleType: BubbleType?
 }

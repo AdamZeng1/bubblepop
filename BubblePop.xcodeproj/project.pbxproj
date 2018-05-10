@@ -125,12 +125,9 @@
 				1FDC135C209EBF4C00331C9F /* Sound Assets */,
 				1FD1095D20A31BEE001C99A2 /* Model */,
 				1FD1095E20A32847001C99A2 /* View */,
+				1FD1095F20A348B2001C99A2 /* View Controller */,
 				1F45EC17208CD99900E47B56 /* AppDelegate.swift */,
 				1FBE54F6208DACFC001E00DB /* Assets.xcassets */,
-				1FDC135A209EB45200331C9F /* HomeViewController.swift */,
-				1F45EC19208CD99900E47B56 /* GameViewController.swift */,
-				1FDC1358209E849100331C9F /* ScoreViewController.swift */,
-				1F27B715209FD258002E03C6 /* SettingsViewController.swift */,
 				1F27B71B20A0A66F002E03C6 /* Main.storyboard */,
 				1F45EC20208CD99A00E47B56 /* LaunchScreen.storyboard */,
 				1F45EC23208CD99A00E47B56 /* Info.plist */,
@@ -174,6 +171,17 @@
 				1FDC1360209F1C5A00331C9F /* PointView.swift */,
 			);
 			path = View;
+			sourceTree = "<group>";
+		};
+		1FD1095F20A348B2001C99A2 /* View Controller */ = {
+			isa = PBXGroup;
+			children = (
+				1FDC135A209EB45200331C9F /* HomeViewController.swift */,
+				1F45EC19208CD99900E47B56 /* GameViewController.swift */,
+				1FDC1358209E849100331C9F /* ScoreViewController.swift */,
+				1F27B715209FD258002E03C6 /* SettingsViewController.swift */,
+			);
+			path = "View Controller";
 			sourceTree = "<group>";
 		};
 		1FDC135C209EBF4C00331C9F /* Sound Assets */ = {
