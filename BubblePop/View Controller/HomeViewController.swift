@@ -31,7 +31,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         super.viewDidLoad()
         
         nameTextField.delegate = self
-        
     }
     
 
@@ -48,12 +47,20 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
             
             UIView.animate(withDuration: 0.1, animations: {
                 
+                self.nameTextField.layer.borderColor = UIColor.red.cgColor
+                self.nameTextField.layer.borderWidth = 1.0
+                self.nameTextField.layer.cornerRadius = 5.0
+                
                 let rightTransform = CGAffineTransform(translationX: 10, y: 0)
                 self.nameTextField.transform = rightTransform
                 
             }) { (_) in
                 
                 UIView.animate(withDuration: 0.1, animations: {
+                    
+                    self.nameTextField.layer.borderColor = UIColor.lightGray.cgColor
+                    self.nameTextField.layer.borderWidth = 0.25
+                    
                     self.nameTextField.transform = CGAffineTransform.identity
                 })
             }

@@ -98,8 +98,8 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
         
         // alternate the cell background color
         if indexPath.row % 2 == 1 {
-            let gainsboro = UIColor(red: 220/255.0, green: 220/255.0, blue: 220/255.0, alpha: 1)
-            cell.backgroundColor = gainsboro
+            let lightCyan = UIColor(red: 224/255.0, green: 255/255.0, blue: 255/255.0, alpha: 1)
+            cell.backgroundColor = lightCyan
         }
         else {
             cell.backgroundColor = .clear
