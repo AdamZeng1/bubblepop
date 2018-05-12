@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Class for gained points label
 class PointView: UILabel {
     
     override init(frame: CGRect) {

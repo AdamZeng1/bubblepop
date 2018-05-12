@@ -28,7 +28,7 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
         do {
             scoreboard = try dataStorage.loadScoreboard()
         } catch {
-            print("Error loading scoreboard")
+            playerNameLabel.text = "No High Scores"
         }
         
         sortScores()

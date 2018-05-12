@@ -24,7 +24,6 @@ extension UIButton {
 
 class HomeViewController: UIViewController, UITextFieldDelegate {
     
-    // Outlets
     @IBOutlet weak var nameTextField: UITextField!
     
     override func viewDidLoad() {
@@ -32,8 +31,6 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
         
         nameTextField.delegate = self
     }
-    
-
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         nameTextField.resignFirstResponder()
@@ -43,6 +40,7 @@ class HomeViewController: UIViewController, UITextFieldDelegate {
     @IBAction func playButtonTapped(_ sender: UIButton) {
         sender.shrink()
         
+        // check and animate text field if it is empty
         if nameTextField.text == "" {
             
             UIView.animate(withDuration: 0.1, animations: {

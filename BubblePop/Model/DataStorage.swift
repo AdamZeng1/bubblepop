@@ -12,12 +12,14 @@ struct DataStorage: Codable {
     let gameSettingsArchiveURL: URL
     let scoreboardArchiveURL: URL
     
+    // for data errors
     enum DataError: Error {
         case dataNotFound
         case dataNotSaved
     }
     
     init() {
+        // set up URLs
         let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first!
         gameSettingsArchiveURL = documentsDirectory.appendingPathComponent("game_settings")
             .appendingPathExtension("json")

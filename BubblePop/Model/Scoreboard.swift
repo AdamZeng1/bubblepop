@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Model struct for the scoreboard
 struct Scoreboard: Codable {
     var name: String
     var score: Int

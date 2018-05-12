@@ -25,7 +25,6 @@ extension UILabel {
     }
 }
 
-
 class GameViewController: UIViewController {
     
     @IBOutlet weak var countdownLabel: UILabel!
