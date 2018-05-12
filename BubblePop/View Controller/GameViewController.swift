@@ -127,7 +127,7 @@ class GameViewController: UIViewController {
     
     /// Method to update view during play time
     @objc func updateGameTimer() {
-        // Guard to only run if countdown is finish
+        // Guard to run only if the countdown is finished
         guard countdownLeft <= 0 else { return }
         
         // End the game after time hits zero and shows the scoreboard scene
@@ -210,11 +210,12 @@ class GameViewController: UIViewController {
     
     /// Method to animate bubbles float and remove them when off the view
     @objc func updateBubbleView() {
+        // Guard to run only when the countdown is finished
         guard countdownLeft <= 0 else { return }
         
         for subview in self.view.subviews {
             if subview is BubbleView {
-                // Floats bubble up
+                // Float bubble up
                 subview.center.y -= self.floatSpeed
                 
                 // Remove bubble when it floats outside the view

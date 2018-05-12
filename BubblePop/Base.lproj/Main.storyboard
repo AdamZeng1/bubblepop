@@ -27,7 +27,7 @@
                                 <rect key="frame" x="20" y="20" width="374" height="313"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BubblePop Logo" translatesAutoresizingMaskIntoConstraints="NO" id="Mwk-B3-5Lg">
-                                        <rect key="frame" x="62.666666666666686" y="31.666666666666657" width="250" height="249.99999999999997"/>
+                                        <rect key="frame" x="62" y="32" width="250" height="250"/>
                                         <constraints>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="250" id="YHS-KB-2ul"/>
                                             <constraint firstAttribute="height" constant="250" id="f3a-1b-yEC"/>
@@ -51,7 +51,7 @@
                                 <rect key="frame" x="20" y="403" width="374" height="313"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="5" translatesAutoresizingMaskIntoConstraints="NO" id="dLa-4W-Tea">
-                                        <rect key="frame" x="62.666666666666686" y="116.66666666666663" width="250" height="80"/>
+                                        <rect key="frame" x="62" y="117" width="250" height="80"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VkU-Q0-qX5" userLabel="Settings Button">
                                                 <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
@@ -65,7 +65,7 @@
                                                 </connections>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" verticalCompressionResistancePriority="749" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="3tY-fz-012" userLabel="Play Button">
-                                                <rect key="frame" x="84.999999999999986" y="0.0" width="80.000000000000014" height="80"/>
+                                                <rect key="frame" x="85" y="0.0" width="80" height="80"/>
                                                 <constraints>
                                                     <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="jUz-us-hzv"/>
                                                     <constraint firstAttribute="height" constant="80" id="tMR-Dw-w35"/>
@@ -461,7 +461,7 @@
                                 <rect key="frame" x="20" y="428.33333333333326" width="374" height="287.66666666666674"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="T32-Z5-atO" userLabel="Done Button">
-                                        <rect key="frame" x="147.66666666666666" y="103.66666666666669" width="80" height="80"/>
+                                        <rect key="frame" x="147" y="103.66666666666669" width="80" height="80"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="80" id="R9r-ot-VZb"/>
                                             <constraint firstAttribute="width" relation="lessThanOrEqual" constant="80" id="ubx-C3-ZNL"/>
@@ -524,6 +524,6 @@
         <image name="button-settings" width="700" height="700"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="Eji-HQ-Rmc"/>
+        <segue reference="JCz-cD-cuE"/>
     </inferredMetricsTieBreakers>
 </document>
