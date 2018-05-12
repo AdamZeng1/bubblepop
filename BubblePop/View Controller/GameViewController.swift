@@ -65,7 +65,6 @@ class GameViewController: UIViewController {
     
     let randomSource: GKRandomSource = GKARC4RandomSource()
     
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -142,7 +141,7 @@ class GameViewController: UIViewController {
             let newSpeedTime = self.changeSpeedTime - (self.originalTime / 6)
             
             // increase speed every certain time:
-            // [originalTime : changeSpeedTime]
+            // [originalTime : changeSpeedTime/interval]
             // [15s:2s, 30s:5s, 60s:10s, 90s:15s, 120s:20s]
             if timeLeft == changeSpeedTime {
                 self.changeSpeedTime = newSpeedTime
@@ -173,17 +172,17 @@ class GameViewController: UIViewController {
     
     /// Method to randomly remove bubbles periodically
     func removeRandomBubbles() {
-        if timeLeft % removalRate == 0 {
-            var removalCount = randomSource.nextInt(upperBound: bubbleCount())
-            for subview in self.view.subviews {
-                if subview.tag > 0 {
-                    if removalCount > 0 {
-                        removeBubble(subview as! BubbleView)
-                        removalCount -= 1
-                    }
-                    else {
-                        break
-                    }
+        guard timeLeft % removalRate == 0 else { return }
+        
+        var removalCount = randomSource.nextInt(upperBound: bubbleCount())
+        for subview in self.view.subviews {
+            if subview.tag > 0 {
+                if removalCount > 0 {
+                    removeBubble(subview as! BubbleView)
+                    removalCount -= 1
+                }
+                else {
+                    break
                 }
             }
         }
@@ -220,6 +219,40 @@ class GameViewController: UIViewController {
         }
     }
     
+    /// Function to return the total of bubbles in view
+    func bubbleCount() -> Int {
+        var count: Int = 0
+        for subview in self.view.subviews {
+            if subview is BubbleView {
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    /// Method to remove a bubble from the view
+    func removeBubble(_ bubble: BubbleView) {
+        if let bubbleInView = self.view.viewWithTag(bubble.tag) {
+            
+            // animate fading bubble
+            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn,
+                           animations: {
+                            bubbleInView.alpha = 0.02
+            }) { (_) in
+                bubbleInView.removeFromSuperview()
+            }
+        }
+    }
+    
+    /// Method to remove all bubbles in view
+    func removeAllBubbles() {
+        for subview in self.view.subviews {
+            if subview is BubbleView {
+                subview.removeFromSuperview()
+            }
+        }
+    }
+    
     /// Method to create a new bubble randomly
     @objc func createBubble() {
         let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
@@ -233,7 +266,6 @@ class GameViewController: UIViewController {
         if validLocation {
             newBubble.tag = uniqueTag();
             
-//            newBubble.addTarget(self, action: #selector(bubblePopped(_:)), for: .touchDown)
             self.view.addSubview(newBubble)
             self.view.sendSubview(toBack: newBubble)
             
@@ -312,40 +344,6 @@ class GameViewController: UIViewController {
         }
     }
     
-    /// Function to return the total of bubbles in view
-    func bubbleCount() -> Int {
-        var count: Int = 0
-        for subview in self.view.subviews {
-            if subview is BubbleView {
-                count += 1
-            }
-        }
-        return count
-    }
-    
-    /// Method to remove a bubble from the view
-    func removeBubble(_ bubble: BubbleView) {
-        if let bubbleInView = self.view.viewWithTag(bubble.tag) {
-            
-            // animate fading bubble
-            UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn,
-                           animations: {
-                            bubbleInView.alpha = 0.02
-                        }) { (_) in
-                            bubbleInView.removeFromSuperview()
-                        }
-        }
-    }
-    
-    /// Method to remove all bubbles in view
-    func removeAllBubbles() {
-        for subview in self.view.subviews {
-            if subview is BubbleView {
-                subview.removeFromSuperview()
-            }
-        }
-    }
-    
     /// Function to calculate points earned
     /// If same colour bubbles are popped consecutively, bonus 1.5x the original point
     func pointsGained(from currentBubble: BubbleType) -> Int {
@@ -388,6 +386,7 @@ class GameViewController: UIViewController {
 
     }
     
+    /// Touch lifecycle method for recognising popped bubble
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         let touch = touches.first
         let touchLocation = touch?.location(in: self.view)
@@ -419,26 +418,6 @@ class GameViewController: UIViewController {
         }
     }
     
-    /// Event handler when a bubble is popped
-    //    @IBAction func bubblePopped(_ sender: BubbleView) {
-    //        playSound(title: "popSFX", extensionCode: "m4a")
-    //
-    //        let points = pointsGained(from: sender.bubbleType!)
-    //        showPointView(for: sender, gainedPoints: points)
-    //
-    //        self.score += points
-    //
-    //        scoreLabel.text = String(self.score)
-    //        checkHighScore()
-    //
-    //        // animate shrinking bubble
-    //        UIView.animate(withDuration: 0.1, animations: {
-    //            sender.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
-    //        }) { (_) in
-    //            sender.removeFromSuperview()
-    //        }
-    //    }
-    
     /// Method to play background music and bubble popped SFX
     func playSound(title: String, extensionCode: String) {
         guard let url = Bundle.main.url(forResource: title, withExtension: extensionCode) else { return }
@@ -466,7 +445,7 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // keep original time and set the time when to increase speed
+        // keep original time and set the time of when to increase speed
         originalTime = timeLeft
         changeSpeedTime = originalTime
         

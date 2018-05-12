@@ -55,7 +55,7 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
             
         }
         else {
-            playerNameLabel.text = ""
+            playerNameLabel.text = "High Scores"
             finalScoreLabel.text = ""
         }
         
@@ -109,6 +109,6 @@ class ScoreViewController: UIViewController, UITableViewDataSource, UITableViewD
     }
     
     func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        return "High Scores"
+        return "Top 10 Ranks"
     }
 }

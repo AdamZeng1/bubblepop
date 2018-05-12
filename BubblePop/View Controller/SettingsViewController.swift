@@ -144,16 +144,7 @@ class SettingsViewController: UIViewController {
         } catch {
             print(error)
         }
-
-//        performSegue(withIdentifier: "HomeViewSegue", sender: self)
     }
-    
-//    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-//        if segue.identifier == "HomeViewSegue" {
-//            let homeViewController = segue.destination as! HomeViewController
-//            homeViewController.gameSettings = self.gameSettings
-//        }
-//    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
