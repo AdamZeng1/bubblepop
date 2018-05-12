@@ -27,6 +27,7 @@ extension UILabel {
 
 class GameViewController: UIViewController {
     
+    // Outlets
     @IBOutlet weak var countdownLabel: UILabel!
     @IBOutlet weak var timerLabel: UILabel!
     @IBOutlet weak var scoreLabel: UILabel!
@@ -46,6 +47,7 @@ class GameViewController: UIViewController {
     var gameSettings: GameSettings?
     var playerName: String?
     
+    // Game settings
     var countdownLeft: Int = 3
     var timeLeft: Int = 60
     var maxBubbles: Int = 15
@@ -67,12 +69,14 @@ class GameViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Store bubbles
         bubbles.append(BubbleType(color: .red, points: 1))
         bubbles.append(BubbleType(color: pink, points: 2))
         bubbles.append(BubbleType(color: .green, points: 5))
         bubbles.append(BubbleType(color: customBlue, points: 8))
         bubbles.append(BubbleType(color: .black, points: 10))
         
+        // Load game settings
         if let settings = gameSettings {
             timeLeft = settings.gameTime
             maxBubbles = settings.maxBubbles
@@ -90,6 +94,7 @@ class GameViewController: UIViewController {
             highScore = scoreboard[0].score
             highScoreLabel.text = String(highScore)
         } catch {
+            // Set default value
             highScore = 0
         }
     }
@@ -122,8 +127,10 @@ class GameViewController: UIViewController {
     
     /// Method to update view during play time
     @objc func updateGameTimer() {
+        // Guard to only run if countdown is finish
         guard countdownLeft <= 0 else { return }
         
+        // End the game after time hits zero and shows the scoreboard scene
         if timeLeft <= 0 {
             gameTimer?.invalidate()
             gameTimer = nil
@@ -136,10 +143,10 @@ class GameViewController: UIViewController {
             self.performSegue(withIdentifier: "ScoreViewSegue", sender: self)
         }
         else {
-            // scale new floating speed to original time
+            // Scale new floating speed to original time
             let newSpeedTime = self.changeSpeedTime - (self.originalTime / 6)
             
-            // increase speed every certain time:
+            // Increase speed every certain time:
             // [originalTime : changeSpeedTime/interval]
             // [15s:2s, 30s:5s, 60s:10s, 90s:15s, 120s:20s]
             if timeLeft == changeSpeedTime {
@@ -207,10 +214,10 @@ class GameViewController: UIViewController {
         
         for subview in self.view.subviews {
             if subview is BubbleView {
-                // floats bubble up
+                // Floats bubble up
                 subview.center.y -= self.floatSpeed
                 
-                // remove bubble when it floats outside the view
+                // Remove bubble when it floats outside the view
                 if subview.frame.maxY < 0 {
                     subview.removeFromSuperview()
                 }
@@ -233,7 +240,7 @@ class GameViewController: UIViewController {
     func removeBubble(_ bubble: BubbleView) {
         if let bubbleInView = self.view.viewWithTag(bubble.tag) {
             
-            // animate fading bubble
+            // Animate fading bubble
             UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseIn,
                            animations: {
                             bubbleInView.alpha = 0.02
@@ -254,6 +261,7 @@ class GameViewController: UIViewController {
     
     /// Method to create a new bubble randomly
     @objc func createBubble() {
+        // Set random position within the view frame
         let randomX = CGFloat(randomSource.nextUniform()) * (self.view.frame.width-100)
         let randomY = CGFloat(randomSource.nextUniform()) * (self.view.frame.height-100)
         
@@ -276,7 +284,7 @@ class GameViewController: UIViewController {
         }
     }
     
-    /// Function to randomly decide the probability of appearance of bubble
+    /// Function to randomly decide the bubble's probability of appearance
     func randomBubbleType() -> BubbleType {
         var bag: [BubbleType] = []
         for _ in 1...40 {
@@ -320,7 +328,7 @@ class GameViewController: UIViewController {
 
     }
     
-    /// Function to determine valid location of new bubble
+    /// Function to determine valid location of new bubble (not overlap existing ones)
     func isValidLocation(of newBubble: BubbleView) -> Bool {
         for subview in self.view.subviews {
             if let existingBubble = subview as? BubbleView {
@@ -334,7 +342,7 @@ class GameViewController: UIViewController {
     
     /// Function to get a unique tag
     func uniqueTag() -> Int {
-        // loop until a valid tag is available between range 1 to 50
+        // Loop until a valid tag is available between range 1 to 50
         while true {
             let uniqueTag = randomSource.nextInt(upperBound: 50) + 1
             guard let _ = self.view.viewWithTag(uniqueTag) else {
@@ -360,7 +368,7 @@ class GameViewController: UIViewController {
     
     /// Method to show the points gained after popping a bubble
     func showPointView(for currentBubble: BubbleView, gainedPoints: Int) {
-        let pointView: PointView = PointView(frame: CGRect(x: currentBubble.frame.minX, y: currentBubble.frame.minY, width: 150, height: 150))
+        let pointView = PointView(frame: CGRect(x: currentBubble.frame.minX, y: currentBubble.frame.minY, width: 150, height: 150))
         
         pointView.textColor = currentBubble.bubbleType?.color
         
@@ -375,7 +383,7 @@ class GameViewController: UIViewController {
         }
         self.view.addSubview(pointView)
         
-        // animate the points gained to float upwards and fading slowly
+        // Animate the points gained to float upwards and fading slowly
         UIView.animate(withDuration: 0.5, delay: 0, options: .curveEaseOut, animations: {
             pointView.center.y -= 50
             pointView.alpha = 0.02
@@ -394,17 +402,19 @@ class GameViewController: UIViewController {
             if let poppedBubble = subview as? BubbleView {
                 if (poppedBubble.layer.presentation()?.hitTest(touchLocation!)) != nil {
                     
+                    // Play poppped bubble SFX
                     playSound(title: "popSFX", extensionCode: "m4a")
                     
+                    // Calculate and show points
                     let points = pointsGained(from: poppedBubble.bubbleType!)
                     showPointView(for: poppedBubble, gainedPoints: points)
                     
                     self.score += points
-                    
                     scoreLabel.text = String(self.score)
+                    
                     checkHighScore()
                     
-                    // animate shrinking bubble
+                    // Animate shrinking bubble
                     UIView.animate(withDuration: 0.1, animations: {
                         poppedBubble.transform = CGAffineTransform(scaleX: 0.05, y: 0.05)
                     }) { (_) in
@@ -425,7 +435,7 @@ class GameViewController: UIViewController {
             try AVAudioSession.sharedInstance().setCategory(AVAudioSessionCategoryAmbient)
             try AVAudioSession.sharedInstance().setActive(true)
             
-            // Royalty free BGM credit: "Funny Plays" by SnowMusicStudio
+            // Royalty-free BGM credit: "Funny Plays" by SnowMusicStudio
             // Link: https://www.melodyloops.com/tracks/funny-plays/
             if (title == "popBGM") {
                 audioPlayerBGM = try AVAudioPlayer(contentsOf: url, fileTypeHint: AVFileType.mp3.rawValue)
@@ -444,7 +454,7 @@ class GameViewController: UIViewController {
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        // keep original time and set the time of when to increase speed
+        // Keep the original time and set the time of when to increase speed
         originalTime = timeLeft
         changeSpeedTime = originalTime
         
@@ -457,6 +467,7 @@ class GameViewController: UIViewController {
     }
     
     override func viewWillDisappear(_ animated: Bool) {
+        // Remove all the bubbles in the screen
         removeAllBubbles()
     }
     
@@ -472,7 +483,5 @@ class GameViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
-
 }
 

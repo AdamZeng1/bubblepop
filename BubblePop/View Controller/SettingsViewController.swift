@@ -9,37 +9,42 @@
 import UIKit
 
 class SettingsViewController: UIViewController {
-
+    
+    // Outlets
     @IBOutlet weak var gameTimeChosenLabel: UILabel!
     @IBOutlet weak var gameTimeSlider: UISlider!
     @IBOutlet weak var minGameTimeLabel: UILabel!
     @IBOutlet weak var maxGameTimeLabel: UILabel!
-    
     
     @IBOutlet weak var maxBubblesChosenLabel: UILabel!
     @IBOutlet weak var maxBubblesSlider: UISlider!
     @IBOutlet weak var minBubblesLabel: UILabel!
     @IBOutlet weak var maxBubblesLabel: UILabel!
     
+    // Field
     let dataStorage = DataStorage()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        // Load previous settings
         do {
             let gameSettings = try dataStorage.loadGameSettings()
             gameTimeSlider.value = Float(toSliderValue(time: gameSettings.gameTime))
             maxBubblesSlider.value = Float(toSliderValue(limit: gameSettings.maxBubbles))
         } catch {
+            // Use the default values
             let gameSettings = GameSettings()
             gameTimeSlider.value = Float(toSliderValue(time: gameSettings.gameTime))
             maxBubblesSlider.value = Float(toSliderValue(limit: gameSettings.maxBubbles))
         }
         
+        // Manually update the slider values
         gameTimeSliderChanged(self)
         maxBubblesSliderChanged(self)
     }
     
+    /// Helper function to convert time to slider value
     func toSliderValue(time: Int) -> Int {
         var value: Int = 0
         
@@ -60,6 +65,7 @@ class SettingsViewController: UIViewController {
         return value
     }
     
+    /// Helper function to convert max bubbles limit to slider value
     func toSliderValue(limit: Int) -> Int {
         var value: Int = 0
         
@@ -80,6 +86,7 @@ class SettingsViewController: UIViewController {
         return value
     }
     
+    /// Helper function to convert time slider value to actual time
     func toTimeValue(_ sliderValue: Int) -> Int {
         var time: Int = 0
         
@@ -100,6 +107,7 @@ class SettingsViewController: UIViewController {
         return time
     }
     
+    /// Function to format the time text
     func timeFormatted(_ totalSeconds: Int) -> String {
         let seconds: Int = totalSeconds % 60
         let minutes: Int = (totalSeconds / 60) % 60
@@ -138,6 +146,7 @@ class SettingsViewController: UIViewController {
     @IBAction func homeButtonTapped(_ sender: UIButton) {
         sender.shrink()
         
+        // Save the game settings
         let settings = GameSettings(gameTime: toTimeValue(Int(gameTimeSlider.value)), maxBubbles: Int(maxBubblesChosenLabel.text!)!)
         do {
             try dataStorage.saveData(settings: settings)
@@ -150,8 +159,4 @@ class SettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-
-    
-
 }

@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Class for the bubble type
 class BubbleType {
     let color: UIColor
     let points: Int

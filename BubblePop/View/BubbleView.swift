@@ -9,6 +9,7 @@
 import Foundation
 import UIKit
 
+// Class for the bubble image view
 class BubbleView: UIImageView {
     var bubbleType: BubbleType?
 }

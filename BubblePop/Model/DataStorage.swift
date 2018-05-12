@@ -8,6 +8,7 @@
 
 import Foundation
 
+// Model struct for storing data
 struct DataStorage: Codable {
     let gameSettingsArchiveURL: URL
     let scoreboardArchiveURL: URL
