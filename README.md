@@ -14,9 +14,9 @@ This project was done for **41889 Application Development in the iOS Environment
 
 Click on the screenshot below to play the video preview.
 
-[Gameplay Preview](docs/BubblePop-Preview.mov)
+[Gameplay Preview](https://youtu.be/Mo5552PMxYk)
 
-[<img src="docs/BubblePop-Screenshot.png" width=25% />](docs/BubblePop-Preview.mov)
+[<img src="docs/BubblePop-Screenshot.png" width=25% />](https://youtu.be/Mo5552PMxYk)
 
 ### Points
 
